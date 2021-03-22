@@ -3,6 +3,12 @@
 
 #include "stringarray.h"
 
+struct program_params_struct
+{
+    STRING_ARRAY* filenames;
+
+};
+
 typedef struct program_params_struct PROGRAM_PARAMS;
 
 PROGRAM_PARAMS* initProgramParams();
