@@ -1,3 +1,0 @@
-"C:\Program Files\JetBrains\CLion 2020.2.4\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\Cformatter2.dir/objects.a
-C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\ar.exe cr CMakeFiles\Cformatter2.dir/objects.a @CMakeFiles\Cformatter2.dir\objects1.rsp
-C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe -g   -Wl,--whole-archive CMakeFiles\Cformatter2.dir/objects.a -Wl,--no-whole-archive  -o Cformatter2.exe -Wl,--out-implib,libCformatter2.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Cformatter2.dir\linklibs.rsp

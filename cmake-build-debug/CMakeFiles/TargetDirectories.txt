@@ -1,3 +1,0 @@
-C:/Projects/CLionProjects/Cformatter/cmake-build-debug/CMakeFiles/Cformatter.dir
-C:/Projects/CLionProjects/Cformatter/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Projects/CLionProjects/Cformatter/cmake-build-debug/CMakeFiles/rebuild_cache.dir
