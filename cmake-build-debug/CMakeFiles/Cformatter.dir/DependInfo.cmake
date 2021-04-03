@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "C:/Projects/CLionProjects/Cformatter/cmake-build-debug/MaxLoopNesting/MaxLoopNesting.c" "C:/Projects/CLionProjects/Cformatter/cmake-build-debug/CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.obj"
-  "C:/Projects/CLionProjects/Cformatter/cmake-build-debug/StringTools/StringTools.c" "C:/Projects/CLionProjects/Cformatter/cmake-build-debug/CMakeFiles/Cformatter.dir/StringTools/StringTools.c.obj"
+  "C:/Projects/CLionProjects/Cformatter/MaxLoopNesting/MaxLoopNesting.c" "C:/Projects/CLionProjects/Cformatter/cmake-build-debug/CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.obj"
+  "C:/Projects/CLionProjects/Cformatter/StringTools/StringTools.c" "C:/Projects/CLionProjects/Cformatter/cmake-build-debug/CMakeFiles/Cformatter.dir/StringTools/StringTools.c.obj"
   "C:/Projects/CLionProjects/Cformatter/main.c" "C:/Projects/CLionProjects/Cformatter/cmake-build-debug/CMakeFiles/Cformatter.dir/main.c.obj"
   )
 set(CMAKE_C_COMPILER_ID "GNU")

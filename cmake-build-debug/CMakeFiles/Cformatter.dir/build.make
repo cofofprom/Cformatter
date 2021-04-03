@@ -90,30 +90,30 @@ CMakeFiles/Cformatter.dir/main.c.s: cmake_force
 	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Projects\CLionProjects\Cformatter\main.c -o CMakeFiles\Cformatter.dir\main.c.s
 
 CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.obj: CMakeFiles/Cformatter.dir/flags.make
-CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.obj: MaxLoopNesting/MaxLoopNesting.c
+CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.obj: ../MaxLoopNesting/MaxLoopNesting.c
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Projects\CLionProjects\Cformatter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.obj"
-	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Cformatter.dir\MaxLoopNesting\MaxLoopNesting.c.obj   -c C:\Projects\CLionProjects\Cformatter\cmake-build-debug\MaxLoopNesting\MaxLoopNesting.c
+	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Cformatter.dir\MaxLoopNesting\MaxLoopNesting.c.obj   -c C:\Projects\CLionProjects\Cformatter\MaxLoopNesting\MaxLoopNesting.c
 
 CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.i"
-	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Projects\CLionProjects\Cformatter\cmake-build-debug\MaxLoopNesting\MaxLoopNesting.c > CMakeFiles\Cformatter.dir\MaxLoopNesting\MaxLoopNesting.c.i
+	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Projects\CLionProjects\Cformatter\MaxLoopNesting\MaxLoopNesting.c > CMakeFiles\Cformatter.dir\MaxLoopNesting\MaxLoopNesting.c.i
 
 CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Cformatter.dir/MaxLoopNesting/MaxLoopNesting.c.s"
-	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Projects\CLionProjects\Cformatter\cmake-build-debug\MaxLoopNesting\MaxLoopNesting.c -o CMakeFiles\Cformatter.dir\MaxLoopNesting\MaxLoopNesting.c.s
+	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Projects\CLionProjects\Cformatter\MaxLoopNesting\MaxLoopNesting.c -o CMakeFiles\Cformatter.dir\MaxLoopNesting\MaxLoopNesting.c.s
 
 CMakeFiles/Cformatter.dir/StringTools/StringTools.c.obj: CMakeFiles/Cformatter.dir/flags.make
-CMakeFiles/Cformatter.dir/StringTools/StringTools.c.obj: StringTools/StringTools.c
+CMakeFiles/Cformatter.dir/StringTools/StringTools.c.obj: ../StringTools/StringTools.c
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Projects\CLionProjects\Cformatter\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/Cformatter.dir/StringTools/StringTools.c.obj"
-	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Cformatter.dir\StringTools\StringTools.c.obj   -c C:\Projects\CLionProjects\Cformatter\cmake-build-debug\StringTools\StringTools.c
+	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\Cformatter.dir\StringTools\StringTools.c.obj   -c C:\Projects\CLionProjects\Cformatter\StringTools\StringTools.c
 
 CMakeFiles/Cformatter.dir/StringTools/StringTools.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/Cformatter.dir/StringTools/StringTools.c.i"
-	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Projects\CLionProjects\Cformatter\cmake-build-debug\StringTools\StringTools.c > CMakeFiles\Cformatter.dir\StringTools\StringTools.c.i
+	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E C:\Projects\CLionProjects\Cformatter\StringTools\StringTools.c > CMakeFiles\Cformatter.dir\StringTools\StringTools.c.i
 
 CMakeFiles/Cformatter.dir/StringTools/StringTools.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/Cformatter.dir/StringTools/StringTools.c.s"
-	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Projects\CLionProjects\Cformatter\cmake-build-debug\StringTools\StringTools.c -o CMakeFiles\Cformatter.dir\StringTools\StringTools.c.s
+	C:\mingw-w64\x86_64-8.1.0-posix-seh-rt_v6-rev0\mingw64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S C:\Projects\CLionProjects\Cformatter\StringTools\StringTools.c -o CMakeFiles\Cformatter.dir\StringTools\StringTools.c.s
 
 # Object files for target Cformatter
 Cformatter_OBJECTS = \

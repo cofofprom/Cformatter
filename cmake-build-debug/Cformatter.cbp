@@ -74,16 +74,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Projects/CLionProjects/Cformatter/cmake-build-debug/MaxLoopNesting/MaxLoopNesting.c">
+		<Unit filename="C:/Projects/CLionProjects/Cformatter/MaxLoopNesting/MaxLoopNesting.c">
 			<Option target="Cformatter"/>
 		</Unit>
-		<Unit filename="C:/Projects/CLionProjects/Cformatter/cmake-build-debug/MaxLoopNesting/MaxLoopNesting.h">
+		<Unit filename="C:/Projects/CLionProjects/Cformatter/MaxLoopNesting/MaxLoopNesting.h">
 			<Option target="Cformatter"/>
 		</Unit>
-		<Unit filename="C:/Projects/CLionProjects/Cformatter/cmake-build-debug/StringTools/StringTools.c">
+		<Unit filename="C:/Projects/CLionProjects/Cformatter/StringTools/StringTools.c">
 			<Option target="Cformatter"/>
 		</Unit>
-		<Unit filename="C:/Projects/CLionProjects/Cformatter/cmake-build-debug/StringTools/StringTools.h">
+		<Unit filename="C:/Projects/CLionProjects/Cformatter/StringTools/StringTools.h">
 			<Option target="Cformatter"/>
 		</Unit>
 		<Unit filename="C:/Projects/CLionProjects/Cformatter/main.c">

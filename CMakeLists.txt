@@ -3,4 +3,4 @@ project(Cformatter C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(Cformatter main.c cmake-build-debug/MaxLoopNesting/MaxLoopNesting.h cmake-build-debug/MaxLoopNesting/MaxLoopNesting.c cmake-build-debug/StringTools/StringTools.c cmake-build-debug/StringTools/StringTools.h)
+add_executable(Cformatter main.c MaxLoopNesting/MaxLoopNesting.h MaxLoopNesting/MaxLoopNesting.c StringTools/StringTools.c StringTools/StringTools.h)
