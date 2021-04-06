@@ -92,7 +92,7 @@ char *replaceOneWord(char *s, const char *oldW, const char *newW, int ptr)
     }
     result[i] = '\0';
 
-    for (int j = ptr, k = 0; k<strlen(result); j++, k++)
+    for (int j = ptr, k = 0; k<strlen(result)+1; j++, k++)
     {
         source[j] = result[k];
     }

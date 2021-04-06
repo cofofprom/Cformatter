@@ -47,7 +47,7 @@ char *deleteDoWhile(char *InputString, char *OutputString)
                 }
                 InputString = replaceOneWord(InputString, temp, " ", i);
 
-                InputString = replaceOneWord(InputString, "do", temp, i - 1);
+                InputString = replaceOneWord(InputString, "do", temp, i);
                 break;
             }
         }
