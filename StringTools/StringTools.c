@@ -3,18 +3,18 @@
 #define bool int
 #define true 1
 #define false 0
-#define SIZE 100
+#define SIZE 1000
 
 char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
 {
     char *result, temp[SIZE] = {0};
-    strcpy(temp, s);
     int idx = 0;
-    for (int k = ptr; k < strlen(temp); k++)
+    for (int k = ptr; k < strlen(s); k++)
     {
-        s[idx] = temp[k];
+        temp[idx] = s[k];
         idx++;
     }
+    strcpy(s, temp);
     int i, cnt = 0;
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
@@ -47,12 +47,14 @@ char *replaceOneWord(char *s, const char *oldW, const char *newW, int ptr)
 {
     char *result, temp[SIZE] = {0};
     int idx = 0;
-    for (int k = ptr; k < strlen(temp); k++)
+    for (int k = ptr; k < strlen(s); k++)
     {
-        s[idx] = temp[k];
+        temp[idx] = s[k];
         idx++;
     }
     int i, cnt = 0;
+    strcpy(s, temp);
+    printf("%s\n", s);
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
 

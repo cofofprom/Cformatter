@@ -11,6 +11,8 @@ char *deleteDoWhile(char *InputString, char *OutputString);
 
 int findLoop(char *InputString, int idx);
 
-void findMaxLoopNesting(char *InputString);
+void findMaxLoopNesting(char *InputString, int *Shift, int *CountBrackets);
+
+void printMaxLoopNesting(char *InputString);
 
 #endif //CFORMATTER_MAXLOOPNESTING_H
