@@ -7,14 +7,17 @@
 
 char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
 {
-    char *result, temp[SIZE] = {0};
+    char *result, temp[SIZE] = {0}, *source;
     int idx = 0;
     for (int k = ptr; k < strlen(s); k++)
     {
         temp[idx] = s[k];
         idx++;
     }
+    source = (char*) malloc(strlen(s)+1);
+    strcpy(source, s);
     strcpy(s, temp);
+
     int i, cnt = 0;
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
@@ -40,21 +43,28 @@ char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
         else result[i++] = *s++;
     }
     result[i] = '\0';
-    return result;
+
+    for (int j = ptr, k = 0; k<strlen(result); j++, k++)
+    {
+        source[j] = result[k];
+    }
+
+    return source;
 }
 
 char *replaceOneWord(char *s, const char *oldW, const char *newW, int ptr)
 {
-    char *result, temp[SIZE] = {0};
+    char *result, temp[SIZE] = {0}, *source;
     int idx = 0;
     for (int k = ptr; k < strlen(s); k++)
     {
         temp[idx] = s[k];
         idx++;
     }
-    int i, cnt = 0;
+    source = (char*) malloc(strlen(s)+1);
+    strcpy(source, s);
     strcpy(s, temp);
-    printf("%s\n", s);
+    int i, cnt = 0;
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
 
@@ -81,7 +91,13 @@ char *replaceOneWord(char *s, const char *oldW, const char *newW, int ptr)
         else result[i++] = *s++;
     }
     result[i] = '\0';
-    return result;
+
+    for (int j = ptr, k = 0; k<strlen(result); j++, k++)
+    {
+        source[j] = result[k];
+    }
+
+    return source;
 }
 
 int countSubstring(char *String, char *Substring)
