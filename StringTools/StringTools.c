@@ -7,96 +7,99 @@
 
 char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
 {
-    char *result, temp[SIZE] = {0}, *source;
-    int idx = 0;
-    for (int k = ptr; k < strlen(s); k++)
+    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char*)malloc(strlen(s)+1) , *str = (char*)malloc(strlen(s)+1);
+    strcpy(str, s);
+    int idx = 0, len = strlen(str);
+    for (int k = ptr; k < len; k++)
     {
-        temp[idx] = s[k];
+        temp[idx] = str[k];
         idx++;
     }
-    source = (char*) malloc(strlen(s)+1);
-    strcpy(source, s);
-    strcpy(s, temp);
-
+    strcpy(source, str);
+    strcpy(str, temp);
     int i, cnt = 0;
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
-    for (i = 0; s[i] != '\0'; i++)
+    for (i = 0; str[i] != '\0'; i++)
     {
-        if (strstr(&s[i], oldW) == &s[i])
+        if (strstr(&str[i], oldW) == &str[i])
         {
             cnt++;
 
             i += oldWlen - 1;
         }
     }
-    result = (char *) malloc(i + cnt * (newWlen - oldWlen) + 1);
     i = 0;
-    while (*s)
+    while (*str)
     {
-        if (strstr(s, oldW) == s)
+        if (strstr(str, oldW) == str)
         {
             strcpy(&result[i], newW);
             i += newWlen;
-            s += oldWlen;
+            str += oldWlen;
         }
-        else result[i++] = *s++;
+        else result[i++] = *str++;
     }
     result[i] = '\0';
-
-    for (int j = ptr, k = 0; k<strlen(result); j++, k++)
+    int j, k = 0;
+    for (j = ptr, k = 0; k<strlen(result); j++, k++)
     {
         source[j] = result[k];
     }
-
+    for (int t=strlen(source)-1; t>=j; t--)
+    {
+        source[t] = '\0';
+    }
     return source;
 }
 
 char *replaceOneWord(char *s, const char *oldW, const char *newW, int ptr)
 {
-    char *result, temp[SIZE] = {0}, *source;
-    int idx = 0;
-    for (int k = ptr; k < strlen(s); k++)
-    {
-        temp[idx] = s[k];
-        idx++;
-    }
-    source = (char*) malloc(strlen(s)+1);
-    strcpy(source, s);
-    strcpy(s, temp);
-    int i, cnt = 0;
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
-
-    for (i = 0; s[i] != '\0'; i++)
+    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char *) malloc(strlen(s) + (newWlen - oldWlen) + 1), *str = (char*)malloc(strlen(s)+1);
+    strcpy(str, s);
+    int idx = 0;
+    int len = strlen(s);
+    for (int k = ptr; k < len; k++)
     {
-        if (strstr(&s[i], oldW) == &s[i])
+        temp[idx] = str[k];
+        idx++;
+    }
+    strcpy(source, str);
+    strcpy(str, temp);
+    int i, cnt = 0;
+    for (i = 0; str[i] != '\0'; i++)
+    {
+        if (strstr(&str[i], oldW) == &str[i])
         {
             i += oldWlen - 1;
             break;
         }
     }
-    result = (char *) malloc(i + cnt * (newWlen - oldWlen) + 1);
     i = 0;
     bool flag = false;
-    while (*s)
+    while (*str)
     {
-        if (strstr(s, oldW) == s && !flag)
+        if (strstr(str, oldW) == str && !flag)
         {
             strcpy(&result[i], newW);
             i += newWlen;
-            s += oldWlen;
+            str += oldWlen;
             flag = true;
         }
-        else result[i++] = *s++;
+        else result[i++] = *str++;
     }
     result[i] = '\0';
-
-    for (int j = ptr, k = 0; k<strlen(result)+1; j++, k++)
+    int j, k = 0;
+    for (j = ptr, k = 0; k<strlen(result); j++, k++)
     {
         source[j] = result[k];
     }
-
+    for (int t=strlen(source)-1; t>=j; t--)
+    {
+        source[t] = '\0';
+    }
     return source;
 }
 

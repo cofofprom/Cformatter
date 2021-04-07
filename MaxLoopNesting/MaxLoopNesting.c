@@ -45,9 +45,11 @@ char *deleteDoWhile(char *InputString, char *OutputString)
                     }
                     else break;
                 }
+
                 InputString = replaceOneWord(InputString, temp, " ", i);
 
-                InputString = replaceOneWord(InputString, "do", temp, i);
+                InputString = replaceOneWord(InputString, "do", temp, i - 1);
+
                 break;
             }
         }
@@ -97,8 +99,6 @@ void findMaxLoopNesting(char *InputString, int *Shift, int *Ans)
 {
     (*Ans)++;
     int temp = findLoop(InputString, *Shift);
-//    printf("%d\n", temp);
-//    (*Shift)++;
     int CountBrackets = 0, idx = 0;
     bool flag = false;
     for (int i=temp; i<strlen(InputString); i++)
@@ -123,7 +123,6 @@ void findMaxLoopNesting(char *InputString, int *Shift, int *Ans)
         }
     }
     (*Shift)++;
-//    printf("%d %d\n", findLoop(InputString, *Shift), idx);
     if (findLoop(InputString, *Shift)<=idx && findLoop(InputString, *Shift)!=0) findMaxLoopNesting(InputString, &(*Shift), &(*Ans));
     else return;
 }
@@ -137,7 +136,6 @@ void printMaxLoopNesting(char *InputString)
         int cnt = 0;
         findMaxLoopNesting(InputString, &idx, &cnt);
         if (cnt>ans) ans = cnt;
-//        printf("%d\n", cnt);
     }
     printf("Maximum depth of nested loops is %d", ans);
 }
