@@ -16,31 +16,37 @@ char* readCode(const char* filename)
 }
 
 char* formatCode(char *code) {
-    char* formatted = (char*)calloc(10*1024, 1);
-    strcpy(formatted, replaceWord(code, "    ", "\t", 0));
-    strcpy(formatted, replaceWord(formatted, "if(", "if (", 0));
-    strcpy(formatted, replaceWord(formatted, "while(", "while (", 0));
-    strcpy(formatted, replaceWord(formatted, "for(", "for (", 0));
-    bool constrFlag = false;
-    int brackets = 0;
-    for(int i = 0; i < strlen(formatted); i++)
-    {
-        char curr = code[i];
-        if(code[i] == 'i' && code[i + 1] == 'f')
-        {
-            constrFlag = true;
-            i += 2;
-            curr = code[i];
-        }
+    char* clean = deleteFormat(code);
+}
 
-        if(constrFlag && code[i] == '(') brackets++;
-        if(constrFlag && code[i] == ')') brackets--;
-        if(constrFlag && brackets == 0) {
-            if(code[i] == ')' && code[i+1] != '\n') {
-                strcpy(formatted, replaceOneWord(formatted, ") ", ")\n", i));
-                constrFlag = false;
-            }
+char *deleteFormat(char *code) {
+    char* result = (char*)calloc(strlen(code), 1);
+    char* temp = (char*)calloc(strlen(code), 1);
+    char curr = 0;
+    strcpy(temp, code);
+    char spaces[100] = { 0 };
+    int spsz = 0;
+    int ptr = 0;
+    bool flag = 0;
+    for(int i = 0; i < strlen(temp); i++) {
+        if (temp[i] == '"' && flag == 0) flag = 1;
+        else if (temp[i] == '"' && flag == 1) flag = 0;
+        if (temp[i] == '\'' && flag == 0) flag = 2;
+        else if (temp[i] == '\'' && flag == 2) flag = 0;
+        if(temp[i] == ' ' && (temp[i + 1] == ' ' || spsz > 0))
+            spaces[spsz++] = ' ';
+        if(temp[i] != ' ' && spsz > 0)
+        {
+            i -= spsz;
+            strcpy(temp, replaceWord(temp, spaces, "\t", i - spsz));
+            for(int j = 0; j < spsz; j++) spaces[j] = 0;
+            spsz = 0;
+            continue;
         }
+        if (!flag && temp[i] != '\t' && temp[i] != '\n' && temp[i] != '\r' && spsz == 0)
+            result[ptr++] = temp[i];
+        else if (flag) result[ptr++] = temp[i];
     }
-    return formatted;
+    free(temp);
+    return result;
 }
