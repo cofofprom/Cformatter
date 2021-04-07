@@ -1,7 +1,7 @@
 #ifndef C_FORMATTER_CMDPARSER_H
 #define C_FORMATTER_CMDPARSER_H
 
-#include "stringarray.h"
+#include "../StringArray/stringarray.h"
 
 struct program_params_struct
 {
