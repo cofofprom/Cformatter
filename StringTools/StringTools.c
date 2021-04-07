@@ -57,10 +57,10 @@ char *replaceOneWord(char *s, const char *oldW, const char *newW, int ptr)
 {
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
-    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char *) malloc(strlen(s) + (newWlen - oldWlen) + 1), *str = (char*)malloc(strlen(s)+1);
+    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char *) calloc(strlen(s) + (newWlen - oldWlen) + 1, 1), *str = (char*)calloc(strlen(s)+1, 1);
     strcpy(str, s);
     int idx = 0;
-    int len = strlen(s);
+    int len = strlen(str);
     for (int k = ptr; k < len; k++)
     {
         temp[idx] = str[k];

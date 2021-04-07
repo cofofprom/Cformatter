@@ -1,9 +1,7 @@
 #include <stdio.h>
-#include "MaxLoopNesting/MaxLoopNesting.h"
+#include "Formatter/Formatter.h"
 int main() {
-    char input[1024] = "do { i++; } while(x > 0)";
-    char output[1024] = { 0 };
-    deleteDoWhile(input, output);
-    printf("%s", output);
+    char* content = readCode("test.c");
+    printf("%s", formatCode(content));
     return 0;
 }
