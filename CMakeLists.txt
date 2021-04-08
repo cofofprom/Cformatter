@@ -9,5 +9,5 @@ set(CMAKE_C_STANDARD 11)
 add_executable(Cformatter main.c)
 
 #Экзешники для тестов, доки: https://github.com/keithn/seatest
-#add_executable(cmdparserTests tests/cmdparser/cmdparserTests.c seatest/seatest.c CmdParser/cmdparser.c)
+add_executable(cmdparserTests tests/cmdparser/cmdparserTests.c seatest/seatest.c CmdParser/cmdparser.c StringArray/stringarray.c)
 add_executable(stringarrayTests tests/stringarray/stringarrayTests.c seatest/seatest.c StringArray/stringarray.c)

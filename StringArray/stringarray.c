@@ -22,6 +22,8 @@ STRING_ARRAY* initStringArray()
     return newArray;
 }
 
+///Dispose of string array
+///@param stringArray Array to dispose of
 void freeStringArray(STRING_ARRAY* stringArray)
 {
     if(stringArray == NULL)
@@ -61,6 +63,13 @@ int appendString(char *inputString, STRING_ARRAY** stringArray) {
         return EOVERFLOW;
     }
 
+    char* newString = calloc(strlen(inputString)+1,sizeof(char));
+    if(newString == NULL)
+    {
+        //printf("WARNING: appendString: error allocating stringarray string attempting to append a new string!");
+        return ENOMEM;
+    }
+
     if((*stringArray)->length == (*stringArray)->allocatedLength)
     {
         STRING_ARRAY* newStringArray = realloc(*stringArray,(*stringArray)->allocatedLength*2);
@@ -72,12 +81,7 @@ int appendString(char *inputString, STRING_ARRAY** stringArray) {
         *stringArray = newStringArray;
         (*stringArray)->allocatedLength *= 2;
     }
-    char* newString = calloc(strlen(inputString)+1,sizeof(char));
-    if(newString == NULL)
-    {
-        //printf("WARNING: appendString: error allocating stringarray string attempting to append a new string!");
-        return ENOMEM;
-    }
+
     int result = strcpy_s(newString,strlen(inputString)+1,inputString);
     (*stringArray)->strings[(*stringArray)->length] = newString;
     (*stringArray)->length++;
@@ -123,7 +127,11 @@ int deleteStringAt(int index, STRING_ARRAY* stringArray) {
     return 0;
 }
 
-///Get string at index, and check it for NULL pointer at the same time!
+///Get a copy of string at index, leaving original intact
+///@param index Target index string
+///@param stringArray Stringarray from which the string is taken
+///@note This function returns a malloc'ed copy of original string.
+/// Modifications to returned string wont affect the original
 const char* getStringAt(int index, STRING_ARRAY *stringArray) {
     if(stringArray == NULL)
     {
