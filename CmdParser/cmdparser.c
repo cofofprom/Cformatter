@@ -11,7 +11,7 @@ char CMDPARSER_PARAMETERS[CMDPARSER_NUM_PARAMETERS] = {'d','f'};
 #define  CMDPARSER_NUM_SWITCHES 0
 char CMDPARSER_SWITCHES[CMDPARSER_NUM_SWITCHES] = {};
 
-///Program parameters initializer
+///Construct new program params struct
 PROGRAM_PARAMS* initProgramParams() {
     PROGRAM_PARAMS* newParams = NULL;
     newParams = calloc(1,sizeof(PROGRAM_PARAMS));
@@ -123,6 +123,7 @@ int parseCmdParams(int argc, char** argv, PROGRAM_PARAMS* params, int* errorPara
 }
 
 ///Checks if character is one of escape characters
+///@param testedChar Char to be tested
 ///@note Internal function
 int charIsEscapeCharacter(char testedChar) {
     for(int i = 0; i < CMDPARSER_NUM_ESCAPE_CHARACTERS; i++)
@@ -137,6 +138,8 @@ int charIsEscapeCharacter(char testedChar) {
 }
 
 ///Take a string, check it if it is a valid path, and append it to filenames if it is
+///@param params pointer to parameter struct
+///@param filenameString Path to file
 ///@note Internal function
 int parseFilenameString(PROGRAM_PARAMS *params, char *filenameString) {
     if(params == NULL)
@@ -169,6 +172,10 @@ int parseFilenameString(PROGRAM_PARAMS *params, char *filenameString) {
     return 0;
 }
 
+///Find all files in directory and all its subdirectories
+///@param params Pointer to parameter struct
+///@param dirString Directory to traverse
+///@note Internal function
 int parseDirectoryString(PROGRAM_PARAMS* params, char* dirString)
 {
     if(params == NULL)
@@ -270,6 +277,9 @@ int parseDirectoryString(PROGRAM_PARAMS* params, char* dirString)
     return 0;
 }
 
+///Check if path specified is a directory
+///@param path Path to test
+///@note internal function
 int isDirectory(const char *path) {
     struct stat statbuf;
     if (stat(path, &statbuf) != 0)

@@ -1,5 +1,5 @@
 #include "stringarray.h"
-
+///Construct a new string array
 STRING_ARRAY* initStringArray()
 {
     STRING_ARRAY* newArray = NULL;
