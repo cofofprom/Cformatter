@@ -91,6 +91,6 @@ char *deleteFormat(char *code) {
         }
         else if (flag) result[ptr++] = temp[i];
     }
-    free(temp);
+    //free(temp);
     return result;
 }
