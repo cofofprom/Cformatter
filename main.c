@@ -3,7 +3,9 @@
 #include <stdlib.h>
 int main() {
     char* content = readCode("test.c");
-    char* res = deleteFormat(content);
-    printf("%s", res);
+    char* res = formatCode(content);
+    FILE* f = fopen("out.txt", "wb");
+    fprintf(f,"%s", res);
+    fclose(f);
     return 0;
 }
