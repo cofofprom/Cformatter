@@ -3,11 +3,23 @@
 #define bool int
 #define true 1
 #define false 0
-#define SIZE 1000
+#define SIZE 10000
 
 char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
 {
-    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char*)malloc(strlen(s)+1) , *str = (char*)malloc(strlen(s)+1);
+    int newWlen = strlen(newW);
+    int oldWlen = strlen(oldW);
+    int i, cnt = 0;
+    for (i = ptr; s[i] != '\0'; i++)
+    {
+        if (strstr(&s[i], oldW) == &s[i])
+        {
+            cnt++;
+
+            i += oldWlen - 1;
+        }
+    }
+    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char *) calloc(strlen(s) + cnt*(newWlen - oldWlen) + 1, 1), *str = (char*)malloc(strlen(s)+1);
     strcpy(str, s);
     int idx = 0, len = strlen(str);
     for (int k = ptr; k < len; k++)
@@ -17,18 +29,6 @@ char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
     }
     strcpy(source, str);
     strcpy(str, temp);
-    int i, cnt = 0;
-    int newWlen = strlen(newW);
-    int oldWlen = strlen(oldW);
-    for (i = 0; str[i] != '\0'; i++)
-    {
-        if (strstr(&str[i], oldW) == &str[i])
-        {
-            cnt++;
-
-            i += oldWlen - 1;
-        }
-    }
     i = 0;
     while (*str)
     {
@@ -57,10 +57,10 @@ char *replaceOneWord(char *s, const char *oldW, const char *newW, int ptr)
 {
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
-    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char *) malloc(strlen(s) + (newWlen - oldWlen) + 1), *str = (char*)malloc(strlen(s)+1);
+    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char *) calloc(strlen(s) + (newWlen - oldWlen) + 1, 1), *str = (char*)calloc(strlen(s)+1, 1);
     strcpy(str, s);
     int idx = 0;
-    int len = strlen(s);
+    int len = strlen(str);
     for (int k = ptr; k < len; k++)
     {
         temp[idx] = str[k];
