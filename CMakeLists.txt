@@ -11,3 +11,5 @@ add_executable(Cformatter main.c)
 #Экзешники для тестов, доки: https://github.com/keithn/seatest
 add_executable(cmdparserTests tests/cmdparser/cmdparserTests.c seatest/seatest.c CmdParser/cmdparser.c StringArray/stringarray.c)
 add_executable(stringarrayTests tests/stringarray/stringarrayTests.c seatest/seatest.c StringArray/stringarray.c)
+=======
+add_executable(Cformatter main.c MaxLoopNesting/MaxLoopNesting.h MaxLoopNesting/MaxLoopNesting.c StringTools/StringTools.c StringTools/StringTools.h Formatter/Formatter.c Formatter/Formatter.h)
