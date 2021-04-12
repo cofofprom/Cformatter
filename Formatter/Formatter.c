@@ -21,6 +21,9 @@ char* formatCode(char *code) {
     clean = replaceWord(clean, "if(", "if (", 0);
     clean = replaceWord(clean, "while(", "while (", 0);
     clean = replaceWord(clean, "for(", "for (", 0);
+    clean = replaceWord(clean, "){", ") {", 0);
+    clean = replaceWord(clean, "==", " == ", 0);
+    clean = deleteFormat(code);
     bool preprocFlag = false;
     bool preprocBalance = 0;
     int nesting = 0;
