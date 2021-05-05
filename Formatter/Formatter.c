@@ -21,6 +21,7 @@ char* contextReplacer(char* code)
     strcpy(result, code);
     bool kavy = 0;
     bool forFlag = false;
+    bool preprocFlag = false;
     int forBalance = 0;
     for(int i = 0; i < strlen(result); i++) {
         if(result[i] == '"') kavy = !kavy; // checking if we can replace things
@@ -56,23 +57,27 @@ char* contextReplacer(char* code)
                 result = replaceOneWord(result, "==", " == ", i);
                 i+=2;
             }
+
+            if(result[i] == '#') preprocFlag = true;
+            if(result[i] == '\r' && preprocFlag) preprocFlag = false;
+
             if(result[i] == '=' && result[i+1] != '=' && result[i-1] != '=' && result[i-1] != '<' && result[i-1] != '>') {
                 result = replaceOneWord(result, "=", " = ", i);
                 i+=2;
             }
-            if(result[i] == '<' && result[i+1] == '=') {
+            if(result[i] == '<' && result[i+1] == '=' && !preprocFlag) {
                 result = replaceOneWord(result, "<=", " <= ", i);
                 i+=2;
             }
-            if(result[i] == '<' && result[i+1] != '=') {
+            if(result[i] == '<' && result[i+1] != '=' && !preprocFlag) {
                 result = replaceOneWord(result, "<", " < ", i);
                 i+=2;
             }
-            if(result[i] == '>' && result[i+1] == '=') {
+            if(result[i] == '>' && result[i+1] == '=' && !preprocFlag) {
                 result = replaceOneWord(result, ">=", " >= ", i);
                 i+=2;
             }
-            if(result[i] == '>' && result[i+1] != '=') {
+            if(result[i] == '>' && result[i+1] != '=' && !preprocFlag) {
                 result = replaceOneWord(result, ">", " > ", i);
                 i+=2;
             }
@@ -130,7 +135,7 @@ char* formatCode(char *code) {
     //clean = replaceWord(clean, "-", " - ", 0);
     clean = contextReplacer(clean);
     clean = deleteFormat(clean);
-    printf("%s", clean);
+    //printf("%s", clean);
     bool preprocFlag = false;
     bool preprocBalance = 0;
     int nesting = 0;
