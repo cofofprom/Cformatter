@@ -25,7 +25,7 @@ typedef struct Variables
     char Value[SIZE];
 } Variables;
 
-bool findVariableInList(char Name[]);
+int findVariableInList(char *NameOfVariable);
 
 bool isVariable(char *Code, int idx);
 
@@ -33,6 +33,10 @@ void getVariable(char *Code, int idx);
 
 void findVariables(char *Code);
 
-void printVariables(char *Code);
+void printVariables(char *RawCode);
+
+void DEBUG(char *RawCode);
+
+void checkName(char *RawCode);
 
 #endif //CFORMATTER_CHECKVARIABLES_H

@@ -3,7 +3,7 @@
 UserType ListOfUserTypes[MAX_SIZE] = {0};
 int TypesPtr = 0;
 
-bool isNameOfSavedType(char *Code, int idx)
+int isNameOfSavedType(char *Code, int idx)
 {
     char Name[STRING_SIZE] = {0};
     int ptr = 0;
@@ -38,27 +38,27 @@ bool isNameOfSavedType(char *Code, int idx)
                     break;
                 }
             }
-            if (flag) return 1;
+            if (flag) return strlen(Name);
             else continue;
         }
     }
-    for (int i = 0; i < TypesPtr; i++)
-    {
-        if (strlen(Name) == ListOfUserTypes[i].NameSize)
-        {
-            bool flag = true;
-            for (int j = 0; j < strlen(Name); j++)
-            {
-                if (ListOfUserTypes[i].Name[j] != Name[j])
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag) return 1;
-            else continue;
-        }
-    }
+//    for (int i = 0; i < TypesPtr; i++)
+//    {
+//        if (strlen(Name) == ListOfUserTypes[i].NameSize)
+//        {
+//            bool flag = true;
+//            for (int j = 0; j < strlen(Name); j++)
+//            {
+//                if (ListOfUserTypes[i].Name[j] != Name[j])
+//                {
+//                    flag = false;
+//                    break;
+//                }
+//            }
+//            if (flag) return 1;
+//            else continue;
+//        }
+//    }
     return 0;
 }
 
