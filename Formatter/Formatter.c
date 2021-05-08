@@ -101,7 +101,7 @@ char* contextReplacer(char* code)
                 result = replaceOneWord(result, "*=", " *= ", i);
                 i+=2;
             }
-            if(result[i] == '*' && result[i+1] != '=' && result[i+1] != ' ') {
+            if ((result[i-1] >= '1' && result[i-1]<='9' || result[i-1] >= 'a' && result[i-1] <= 'z' || result[i-1] >= 'A' && result[i-1] <= 'Z' || result[i-1] == '_') && result[i] == '*' && result[i+1] != '=' && (result[i+1] >= 'a' && result[i+1] <= 'z' || result[i+1] >= 'A' && result[i+1] <= 'Z' || result[i+1] == ' ')) {
                 result = replaceOneWord(result, "*", " * ", i);
                 i+=2;
             }
