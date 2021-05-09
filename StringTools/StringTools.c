@@ -1,14 +1,15 @@
 #include "StringTools.h"
-
 #define bool int
 #define true 1
 #define false 0
 #define SIZE 10000
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
 char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
 {
     int newWlen = strlen(newW);
     int oldWlen = strlen(oldW);
+    long sourceLen = strlen(s);
     int i, cnt = 0;
     for (i = ptr; s[i] != '\0'; i++)
     {
@@ -19,7 +20,11 @@ char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
             i += oldWlen - 1;
         }
     }
-    char result[SIZE] = {0}, temp[SIZE] = {0}, *source = (char *) calloc(strlen(s) + cnt*(newWlen - oldWlen) + 1, 1), *str = (char*)malloc(strlen(s)+1);
+    long long newSize = MAX(sourceLen + cnt * (newWlen - oldWlen) + 1, sourceLen);
+    char result[SIZE] = {0};
+    char temp[SIZE] = {0};
+    char *source = (char *) calloc(newSize, 1);
+    char *str = (char*)calloc(strlen(s)+1, 1);
     strcpy(str, s);
     int idx = 0, len = strlen(str);
     for (int k = ptr; k < len; k++)
@@ -50,6 +55,7 @@ char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
     {
         source[t] = '\0';
     }
+    //free(str);
     return source;
 }
 
