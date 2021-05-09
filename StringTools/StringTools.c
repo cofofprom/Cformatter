@@ -1,9 +1,9 @@
 #include "StringTools.h"
-
 #define bool int
 #define true 1
 #define false 0
 #define SIZE 10000
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
 char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
 {
@@ -20,7 +20,7 @@ char *replaceWord(char *s, const char *oldW, const char *newW, int ptr)
             i += oldWlen - 1;
         }
     }
-    long newSize = sourceLen + cnt * (newWlen - oldWlen) + 1;
+    long long newSize = MAX(sourceLen + cnt * (newWlen - oldWlen) + 1, sourceLen);
     char result[SIZE] = {0};
     char temp[SIZE] = {0};
     char *source = (char *) calloc(newSize, 1);

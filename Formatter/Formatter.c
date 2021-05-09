@@ -155,9 +155,16 @@ char* formatCode(char *code) {
     clean = forFormat(clean);
     bool preprocFlag = false;
     bool preprocBalance = 0;
+    bool initializer = false;
     int nesting = 0;
     for(int i = 0; i < strlen(clean); i++)
     {
+        if(clean[i] == ']' && clean[i + 1] == ' ' && clean[i + 2] == '=' && clean[i + 3] == ' ' && clean[i + 4] == '{') {
+            clean = replaceOneWord(clean, "{", "{ ", i);
+            i += 5;
+            initializer = true;
+        }
+        if(clean[i] == '}' && initializer) continue;
         // nesting format
         if(clean[i] == '{')
         {
@@ -188,6 +195,7 @@ char* formatCode(char *code) {
                 for(int j = 2; j-2 < nesting - 1; j++) nestingNewLine[j] = '\t';
 
             clean = replaceOneWord(clean, ";", nestingNewLine, i);
+            initializer = false;
         }
     }
     return clean;
