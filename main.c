@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
     char* inFilename = params->filenames->strings[0];
     char* code = readCode(inFilename);
     code = formatCode(code);
-    code = replaceWithCamelCase(code);
+    //code = replaceWithCamelCase(code);
     printf("Formatted code printed out to out.txt\n");
     fprintf(out,"%s", code);
     printMaxLoopNesting(code);
