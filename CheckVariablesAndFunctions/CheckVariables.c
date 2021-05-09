@@ -257,7 +257,7 @@ void printVariables(char *RawCode)         //Output function
     }
 }
 
-void DEBUG(char *RawCode)
+void DEBUG_VARS(char *RawCode)
 {
     char *Code = (char *) calloc(SIZE_OF_CODE, 1);
     Code = changeMacro(RawCode);

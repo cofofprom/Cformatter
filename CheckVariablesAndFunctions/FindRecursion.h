@@ -32,6 +32,12 @@ bool isFunction(char *Code, int idx);
 
 void addAllFunctions(char *Code);
 
-void checkFunctionForRecursion(char *RawCode);
+bool checkList(char (*OrderOfFunctionCalls)[SIZE], char *CurrentFunction, int ptr);
+
+bool findFunc(char (*OrderOfFunctionCalls)[SIZE], char *CurrentFunction, char *Code, int ptr);
+
+void checkFunctionsForRecursion(char *RawCode);
+
+void DEBUG_FUNC(char *RawCode);
 
 #endif //CFORMATTER_FINDRECURSION_H
