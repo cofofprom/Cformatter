@@ -120,36 +120,14 @@ char* contextReplacer(char* code)
 
 char* formatCode(char *code) {
     char* clean = deleteFormat(code);
-    //printf("%s", clean);
-    /*clean = replaceWord(clean, "if(", "if (", 0);
-    clean = replaceWord(clean, "while(", "while (", 0);
-    clean = replaceWord(clean, "for(", "for (", 0);
-    clean = replaceWord(clean, "; ", ";", 0);
-    clean = replaceWord(clean, "{ ", "{", 0);
-    clean = replaceWord(clean, "} ", "}", 0);
-    clean = replaceWord(clean, "){", ") {", 0);
-    clean = replaceWord(clean, "==", " == ", 0);
-    clean = replaceWord(clean, "<=", " <= ", 0);
-    clean = replaceWord(clean, ">=", " >= ", 0);*/
-    //clean = replaceWord(clean, "+", " + ", 0);
-    //clean = replaceWord(clean, "-", " - ", 0);
     clean = contextReplacer(clean);
+    //clean = replaceWord(clean, "\r", "\n", 0);
     clean = deleteFormat(clean);
-    //printf("%s", clean);
     bool preprocFlag = false;
     bool preprocBalance = 0;
     int nesting = 0;
     for(int i = 0; i < strlen(clean); i++)
     {
-        // preprocessor format
-        /*if(clean[i] == '#' && (clean[i+1] == 'i')) preprocFlag = true;
-        if(preprocFlag && clean[i] == '"' && preprocBalance == 0) preprocBalance++;
-        else if(preprocFlag && (clean[i] == '>' || preprocBalance == 1 && clean[i] == '"'))
-        {
-            clean = replaceOneWord(clean, (char[]) { clean[i], 0}, (char[]){clean[i], '\n', 0}, i);
-            preprocFlag = false;
-            preprocBalance = 0;
-        }*/
         // nesting format
         if(clean[i] == '{')
         {
@@ -200,15 +178,17 @@ char *deleteFormat(char *code) {
         if (temp[i] == '\'' && flag == 0) flag = 2;
         else if (temp[i] == '\'' && flag == 2) flag = 0;
         if(!flag && temp[i] == '#') macroFlag = 1;
-        if(macroFlag && temp[i] == '\n') macroFlag = 0;
+        if(macroFlag && temp[i] == '\n') { macroFlag = 0; result[ptr++] = temp[i]; continue; }
         if(temp[i] == ' ' && (temp[i + 1] == ' ' || spsz > 0))
             spaces[spsz++] = ' ';
         if(temp[i] != ' ' && spsz > 0)
         {
             i -= spsz;
-            temp = replaceWord(temp, spaces, " ", i - spsz);
+            temp = replaceWord(temp, spaces, " ", i);
+            char curr = temp[i];
             for(int j = 0; j < spsz; j++) spaces[j] = 0;
             spsz = 0;
+            i -= 1;
             continue;
         }
         if (!flag && !macroFlag && temp[i] != '\t' && temp[i] != '\n' && temp[i] != '\r' && spsz == 0) {
