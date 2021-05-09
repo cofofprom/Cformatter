@@ -122,7 +122,7 @@ char* formatCode(char *code) {
     char* clean = deleteFormat(code);
     clean = contextReplacer(clean);
     //clean = replaceWord(clean, "\r", "\n", 0);
-    clean = deleteFormat(clean);
+    //clean = deleteFormat(clean);
     bool preprocFlag = false;
     bool preprocBalance = 0;
     int nesting = 0;
@@ -185,7 +185,6 @@ char *deleteFormat(char *code) {
         {
             i -= spsz;
             temp = replaceWord(temp, spaces, " ", i);
-            char curr = temp[i];
             for(int j = 0; j < spsz; j++) spaces[j] = 0;
             spsz = 0;
             i -= 1;
