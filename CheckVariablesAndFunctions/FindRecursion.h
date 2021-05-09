@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../Formatter/Formatter.h"
+#include "RemovePreprocessors.h"
 
 #define SIZE 100
 #define MAX_SIZE 250
@@ -21,9 +22,16 @@ typedef struct UserType
     int NameSize;
 } UserType;
 
+int findTypeInList(char *NameOfType);
 
-bool isNameOfSavedType(char *Code, int idx);
+int isNameOfSavedType(char *Code, int idx);
 
-void addAllTypes(char *FileName);
+void addAllTypes(char *Code);
+
+bool isFunction(char *Code, int idx);
+
+void addAllFunctions(char *Code);
+
+void checkFunctionForRecursion(char *RawCode);
 
 #endif //CFORMATTER_FINDRECURSION_H

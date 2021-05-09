@@ -1,9 +1,20 @@
 #include "FindRecursion.h"
 
 UserType ListOfUserTypes[MAX_SIZE] = {0};
-int TypesPtr = 0;
+char ListOfFunctions[SIZE][SIZE] = {0};
+int NumberOfSavedTypes = 0, FuncPtr = 0;
 
-int isNameOfSavedType(char *Code, int idx)
+int findTypeInList(char *NameOfType)
+{
+    for (int i = 0; i < NumberOfStdTypes; i++)
+    {
+        if (strcmp(ListOfUserTypes[i].Name, NameOfType) == 0) return i;
+    }
+    return -1;
+}
+
+int isNameOfSavedType(char *Code,
+                      int idx)     //To find out if it is the beginning of any saved type and to return the length of it
 {
     char Name[STRING_SIZE] = {0};
     int ptr = 0;
@@ -18,7 +29,7 @@ int isNameOfSavedType(char *Code, int idx)
                                                "long double _Complex", "FILE"};
     for (int i = idx; i < strlen(Code); i++)
     {
-        if ((Code[i] >= 'a' && Code[i] <= 'z') || (Code[i] >= 'A' && Code[i] <= 'Z'))
+        if ((Code[i] >= 'a' && Code[i] <= 'z') || (Code[i] >= 'A' && Code[i] <= 'Z') || Code[i] == '_')
         {
             Name[ptr] = Code[i];
             ptr++;
@@ -27,47 +38,24 @@ int isNameOfSavedType(char *Code, int idx)
     }
     for (int i = 0; i < NumberOfStdTypes; i++)
     {
-        if (strlen(NamesOfStdTypes[i]) == strlen(Name))
-        {
-            bool flag = true;
-            for (int j = 0; j < strlen(Name); j++)
-            {
-                if (NamesOfStdTypes[i][j] != Name[j])
-                {
-                    flag = false;
-                    break;
-                }
-            }
-            if (flag) return strlen(Name);
-            else continue;
-        }
+        if (strlen(NamesOfStdTypes[i]) == strlen(Name) && !strcmp(Name, NamesOfStdTypes[i])) return strlen(Name);
+        else continue;
     }
-//    for (int i = 0; i < TypesPtr; i++)
-//    {
-//        if (strlen(Name) == ListOfUserTypes[i].NameSize)
-//        {
-//            bool flag = true;
-//            for (int j = 0; j < strlen(Name); j++)
-//            {
-//                if (ListOfUserTypes[i].Name[j] != Name[j])
-//                {
-//                    flag = false;
-//                    break;
-//                }
-//            }
-//            if (flag) return 1;
-//            else continue;
-//        }
-//    }
-    return 0;
+    for (int i = 0; i < NumberOfSavedTypes; i++)
+    {
+        if (strlen(Name) == ListOfUserTypes[i].NameSize && !strcmp(Name, ListOfUserTypes[i].Name)) return strlen(Name);
+        else continue;
+    }
+    return false;
 }
 
 void addAllTypes(char *Code)
 {
-    char StructString[] = "struct", TypedefString[] = "typedef", str[MAX_SIZE] = {0};
-    for (int i = 0; i < strlen(Code); i++)
+    char StructString[] = "struct", str[MAX_SIZE] = {0};
+    bool isType = false;
+    for (int i = 0; i < strlen(Code) - strlen(StructString); i++)
     {
-        if (Code[i] == 's' && Code[i-1]=='\t')
+        if (Code[i] == 's' && Code[i - 1] == '\t')
         {
             bool flag = true;
             for (int j = 0; j < strlen(StructString) && i + j < strlen(Code); j++)
@@ -80,18 +68,148 @@ void addAllTypes(char *Code)
             }
             if (flag)
             {
-                int CountBrackets = 0, id = i;
-                for (int j=i; j<strlen(Code); j++)
+                int CountBrackets = 0, id = i, StructPtr = 0, TypedefPtr = 0;
+                char NameOfStruct[SIZE] = {0}, TypedefName[SIZE] = {0};
+                for (int j = i; Code[j] != '\n' && Code[j] != '{'; j++)
                 {
-                    if (Code[j]=='{') CountBrackets++;
-                    if (Code[j]=='}') CountBrackets--;
-                    if (CountBrackets==0)
+                    if (Code[j] != ' ')
+                    {
+                        NameOfStruct[StructPtr] = Code[j];
+                        StructPtr++;
+                    }
+                }
+                for (int j = i; j < strlen(Code); j++)
+                {
+                    if (Code[j] == '{') CountBrackets++;
+                    if (Code[j] == '}') CountBrackets--;
+                    if (CountBrackets == 0)
                     {
                         id = j;
                         break;
                     }
                 }
-//                for (int )
+                for (int j = id; j < strlen(Code) && Code[j] != ';'; j++)
+                {
+                    if (Code[j] != ' ')
+                    {
+                        TypedefName[TypedefPtr] = Code[j];
+                        TypedefPtr++;
+                    }
+                }
+                if (TypedefPtr != 0) strcpy(NameOfStruct, TypedefName);
+                strcpy(ListOfUserTypes[NumberOfSavedTypes].Name, NameOfStruct);
+                ListOfUserTypes[NumberOfSavedTypes].NameSize = (int) strlen(ListOfUserTypes[NumberOfSavedTypes].Name);
+                NumberOfSavedTypes++;
+            }
+            else continue;
+        }
+    }
+}
+
+bool isFunction(char *Code, int idx)
+{
+    if (isNameOfSavedType(Code, idx))
+    {
+        bool flag = false, notMacro = false;
+        for (int i = idx; i < strlen(Code) && Code[i] != '\n'; i++)
+        {
+            if (Code[i] == ';' || Code[i] == '=')
+            {
+                flag = false;
+                break;
+            }
+            if (Code[i] == '(')
+            {
+                flag = true;
+                break;
+            }
+        }
+        return flag;
+    }
+    else return false;
+}
+
+void addAllFunctions(char *Code)
+{
+    addAllTypes(Code);
+    for (int i = 0; i < strlen(Code); i++)
+    {
+        if (Code[i] != ' ' && Code[i] != '\n' && Code[i] != ';' && Code[i] != '\t')
+        {
+            if (isNameOfSavedType(Code, i))
+            {
+                int shift = isNameOfSavedType(Code, i), ptr = 0;
+                char NameOfFunction[SIZE] = {0};
+                for (int j = i + shift; Code[j] != '('; j++)
+                {
+                    if (Code[j] != ' ')
+                    {
+                        NameOfFunction[ptr] = Code[j];
+                        ptr++;
+                    }
+                }
+                bool flag = false;
+                for (int j = 0; j < FuncPtr; j++)
+                {
+                    if (strcmp(ListOfFunctions[j], NameOfFunction) == 0)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag)
+                {
+                    strcpy(ListOfFunctions[FuncPtr], NameOfFunction);
+                    FuncPtr++;
+                }
+            }
+        }
+    }
+}
+
+void checkFunctionForRecursion(char *RawCode)
+{
+    char *Code = (char *) calloc(SIZE_OF_CODE, 1);
+    Code = changeMacro(RawCode);
+    Code = changeTypedef(RawCode);
+    addAllFunctions(Code);
+    for (int NumberOfFunctionInList = 0; NumberOfFunctionInList < FuncPtr; NumberOfFunctionInList++)
+    {
+        char OrderOfFunctionCalls[SIZE][SIZE] = {0};
+        int ptr = 0;
+        for (int i = 0; i < strlen(Code); i++)
+        {
+            if (Code[i] != ' ' && Code[i] != '\n' && Code[i] != ';' && Code[i] != '\t' &&
+                Code[i] == ListOfFunctions[NumberOfFunctionInList][0])
+            {
+                bool flag = true;
+                for (int j = 0; j < strlen(ListOfFunctions[NumberOfFunctionInList]); j++)
+                {
+                    if (Code[i + j] != ListOfFunctions[NumberOfFunctionInList][j])
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    int Brackets = 0;
+                    bool StartOfFunc = false;
+                    for (int j = i; j<strlen(Code); j++)
+                    {
+                        if (Code[j]=='{')
+                        {
+                            Brackets++;
+                            StartOfFunc = true;
+                        }
+                        else if (Code[j]=='}')
+                        {
+                            Brackets--;
+                            if (Brackets==0) break;
+                        }
+                    }
+                }
+                else continue;
             }
         }
     }

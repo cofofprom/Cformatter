@@ -3,9 +3,8 @@
 Variables ListOfVariables[MAX_VARIABLE_SIZE] = {0};
 int NumberOfVariables = 0;
 
-int findVariableInList(
-        char *NameOfVariable)   //Returns -1 if variable is new and the index of the variable in list in other case
-{
+int findVariableInList(char *NameOfVariable)       //Returns -1 if variable is new and the index
+{                                                  //of the variable in list in other case
     for (int i = 0; i < NumberOfVariables; i++)
     {
         if (strcmp(NameOfVariable, ListOfVariables[i].Name) == 0) return i;
@@ -316,23 +315,27 @@ void checkName(char *RawCode)
         {
             if (ListOfVariables[i].Name[j] != ' ') temp[ptr] = ListOfVariables[i].Name[j], ptr++;
         }
-        char *NameOfVar = (char*)calloc(sizeof(ListOfVariables[i].Name), 1);
+        char *NameOfVar = (char *) calloc(sizeof(ListOfVariables[i].Name), 1);
         strcpy(NameOfVar, temp);
-        if (strlen(NameOfVar)==1 && !((NameOfVar[0]>='a' && NameOfVar[0]<='z') || (NameOfVar[0]>='A' && NameOfVar[0]<='Z')))
+        if (strlen(NameOfVar) == 1 &&
+            !((NameOfVar[0] >= 'a' && NameOfVar[0] <= 'z') || (NameOfVar[0] >= 'A' && NameOfVar[0] <= 'Z')))
         {
-            printf("Wrong name of the variable (%s).\nThe name with only one symbol must be a Latin letter.\n", NameOfVar);
+            printf("Wrong name of the variable (%s).\nThe name with only one symbol must be a Latin letter.\n",
+                   NameOfVar);
             continue;
         }
-        if (NameOfVar[0]>='0' && NameOfVar[0]<='9')
+        if (NameOfVar[0] >= '0' && NameOfVar[0] <= '9')
         {
-            printf("Wrong name of the variable (%s).\nThe name of the variable must begin with a Latin letter of with a '_'\n", NameOfVar);
+            printf("Wrong name of the variable (%s).\nThe name of the variable must begin with a Latin letter of with a '_'\n",
+                   NameOfVar);
             continue;
         }
-        for (int j=0; j<strlen(NameOfVar); j++)
+        for (int j = 0; j < strlen(NameOfVar); j++)
         {
-            if (!((NameOfVar[j]>='0' && NameOfVar[j]<='9') || (NameOfVar[j]>='a' && NameOfVar[j]<='z') || (NameOfVar[j]>='A' && NameOfVar[j]<='Z') || NameOfVar[j]=='_'))
+            if (!((NameOfVar[j] >= '0' && NameOfVar[j] <= '9') || (NameOfVar[j] >= 'a' && NameOfVar[j] <= 'z') ||
+                  (NameOfVar[j] >= 'A' && NameOfVar[j] <= 'Z') || NameOfVar[j] == '_'))
             {
-                if (j==0 && NameOfVar[0]=='*') continue;
+                if (j == 0 && NameOfVar[0] == '*') continue;
                 else
                 {
                     printf("Wrong name of the variable (%s).\nOnly numbers, Latin letters, and the symbol '_' are allowed.\n");
