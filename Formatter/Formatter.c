@@ -15,10 +15,38 @@ char* readCode(const char* filename)
     return content;
 }
 
-char* contextReplacer(char* code)
+char* forFormat(char* code)
 {
     char* result = (char*)calloc(strlen(code) + 1, 1);
     strcpy(result, code);
+    bool kavy = 0;
+    bool forFlag = false;
+    int forBalance = 0;
+    for(int i = 0; i < strlen(result); i++)
+    {
+        if(result[i] == '"') kavy = !kavy;
+        if(!kavy)
+        {
+            char curr = result[i];
+            if(result[i] == 'f' && result[i+1] == 'o' && result[i+2] == 'r')
+            {
+                forFlag = true;
+                i+=4;
+                curr = result[i];
+            }
+            if(result[i] == ';' && result[i + 1] != ' ' && forFlag)
+                result = replaceOneWord(result, ";", "; ", i);
+            if(forFlag && result[i] == '(') forBalance++;
+            if(forFlag && result[i] == ')') forBalance--;
+            if(forFlag && forBalance == 0) forFlag = false;
+        }
+    }
+    return result;
+}
+
+char* contextReplacer(char* code)
+{
+    char* result = code;
     bool kavy = 0;
     bool forFlag = false;
     bool preprocFlag = false;
@@ -122,7 +150,9 @@ char* formatCode(char *code) {
     char* clean = deleteFormat(code);
     clean = contextReplacer(clean);
     //clean = replaceWord(clean, "\r", "\n", 0);
+
     clean = deleteFormat(clean);
+    clean = forFormat(clean);
     bool preprocFlag = false;
     bool preprocBalance = 0;
     int nesting = 0;
@@ -165,8 +195,7 @@ char* formatCode(char *code) {
 
 char *deleteFormat(char *code) {
     char* result = (char*)calloc(strlen(code) + 1, 1);
-    char* temp = (char*)calloc(strlen(code) + 1, 1);
-    strcpy(temp, code);
+    char* temp = code;
     char spaces[100] = { 0 };
     int spsz = 0;
     int ptr = 0;
