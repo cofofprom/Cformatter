@@ -6,6 +6,9 @@
 #include "MaxLoopNesting/MaxLoopNesting.h"
 #include "CamelAndPascalCases/CamelCase.h"
 #include "CamelAndPascalCases/PascalCase.h"
+#include "CheckVariablesAndFunctions/CheckVariables.h"
+#include "CheckVariablesAndFunctions/FindRecursion.h"
+#include "CheckVariablesAndFunctions/RemovePreprocessors.h"
 
 int main(int argc, char* argv[]) {
     FILE* out = fopen("out.txt", "w");
