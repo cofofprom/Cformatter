@@ -4,7 +4,9 @@
 #include "StringArray/stringarray.h"
 #include "CmdParser/cmdparser.h"
 #include "MaxLoopNesting/MaxLoopNesting.h"
-#include "CamelCase/CamelCase.h"
+#include "CamelAndPascalCases/CamelCase.h"
+#include "CamelAndPascalCases/PascalCase.h"
+
 int main(int argc, char* argv[]) {
     FILE* out = fopen("out.txt", "w");
     PROGRAM_PARAMS* params = initProgramParams();
@@ -14,6 +16,7 @@ int main(int argc, char* argv[]) {
     char* code = readCode(inFilename);
     code = formatCode(code);
     code = replaceWithCamelCase(code);
+    code = replaceWithPascalCase(code);
     printf("Formatted code printed out to out.txt\n");
     fprintf(out,"%s", code);
     printMaxLoopNesting(code);
