@@ -26,7 +26,7 @@ int isNameOfSavedType(char *Code,
                                                "signed long long", "signed long long int", "unsigned long long",
                                                "unsigned long long int", "float", "double", "long double", "_Bool",
                                                "size_t", "float_t", "double_t", "float _Complex", "double _Complex",
-                                               "long double _Complex", "FILE"};
+                                               "long double _Complex", "FILE", "void", "signed"};
     for (int i = idx; i < strlen(Code); i++)
     {
         if ((Code[i] >= 'a' && Code[i] <= 'z') || (Code[i] >= 'A' && Code[i] <= 'Z') || Code[i] == '_')
@@ -168,6 +168,43 @@ void addAllFunctions(char *Code)
     }
 }
 
+bool isFunctionInCode(char *Code, int idx)
+{
+    addAllFunctions(Code);
+    bool flag = false;
+    char Name[SIZE] = {0};
+    for (int i = idx; i < strlen(Code) && Code[i] != '\n'; i++)
+    {
+        if (Code[i] == ';' || Code[i] == '=' || Code[i] == '\n')
+        {
+            flag = false;
+            break;
+        }
+        if (Code[i] == '(')
+        {
+            flag = true;
+            int id = i;
+            while (Code[id] != ' ') id--;
+            id++;
+            for (int k = id, ptr = 0; Code[k] != '('; k++, ptr++)
+            {
+                Name[ptr] = Code[k];
+            }
+            break;
+        }
+    }
+    if (flag)
+    {
+        for (int i = 0; i < FuncPtr; i++)
+        {
+            if (strcmp(ListOfFunctions[i], Name) == 0 ||
+                (strcmp(ListOfFunctions[i], Name) == 1 && ListOfFunctions[i][0] != Name[0]))
+                return true;
+        }
+    }
+    return false;
+}
+
 bool checkList(char (*OrderOfFunctionCalls)[SIZE], char *CurrentFunction, int ptr)
 {
     for (int i = 0; i < ptr; i++)
@@ -212,15 +249,20 @@ bool findFunc(char (*OrderOfFunctionCalls)[SIZE], char *CurrentFunction, char *C
             {
                 int Brackets = 0;
                 bool Found = false;
-                for (int j = i + strlen(CurrentFunction)+1; j < strlen(Code); j++)
+                int id = i;
+                while (Code[id] != '(') id++;
+                id += 2;
+                for (int j = id; j < strlen(Code); j++)
                 {
                     if (Code[j] == '{')
                     {
                         Brackets++;
+//                        printf("%d {\n", j);
                     }
                     else if (Code[j] == '}')
                     {
                         Brackets--;
+//                        printf("%d }\n", j);
                         if (Brackets == 0) break;
                     }
                     else
@@ -250,6 +292,7 @@ bool findFunc(char (*OrderOfFunctionCalls)[SIZE], char *CurrentFunction, char *C
                             }
                             if (isFunc)
                             {
+//                                printf("%d\n%s\n", Brackets, CurrentFunction);
                                 return findFunc(OrderOfFunctionCalls, temp, Code, ptr);
                             }
                         }
@@ -268,6 +311,7 @@ void checkFunctionsForRecursion(char *RawCode)
     char *Code = (char *) calloc(SIZE_OF_CODE, 1);
     Code = changeMacro(RawCode);
     Code = changeTypedef(Code);
+//    printf("%s\n", Code);
     addAllFunctions(Code);
     bool flag = false;
     for (int NumberOfFunctionInList = 0; NumberOfFunctionInList < FuncPtr; NumberOfFunctionInList++)

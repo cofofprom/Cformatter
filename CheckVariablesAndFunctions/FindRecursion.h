@@ -14,7 +14,7 @@
 #define bool int
 #define true 1
 #define false 0
-#define NumberOfStdTypes 37
+#define NumberOfStdTypes 39
 
 typedef struct UserType
 {
@@ -31,6 +31,8 @@ void addAllTypes(char *Code);
 bool isFunction(char *Code, int idx);
 
 void addAllFunctions(char *Code);
+
+bool isFunctionInCode(char *Code, int idx);
 
 bool checkList(char (*OrderOfFunctionCalls)[SIZE], char *CurrentFunction, int ptr);
 
