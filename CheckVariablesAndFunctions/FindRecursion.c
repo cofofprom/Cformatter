@@ -250,7 +250,7 @@ bool findFunc(char (*OrderOfFunctionCalls)[SIZE], char *CurrentFunction, char *C
                             }
                             if (isFunc)
                             {
-                                findFunc(OrderOfFunctionCalls, temp, Code, ptr);
+                                return findFunc(OrderOfFunctionCalls, temp, Code, ptr);
                             }
                         }
                     }
