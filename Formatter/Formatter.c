@@ -50,7 +50,54 @@ char* contextReplacer(char* code)
     bool kavy = 0;
     bool forFlag = false;
     bool preprocFlag = false;
+    bool kalflag = false;
+    bool endflag = false;
+    bool doflag = false;
+    int brindex = -1;
     int forBalance = 0;
+    int brBalance = 0;
+    int nesting225 = 0;
+    int doBalance = 0;
+    for(int i = 0; i < strlen(result); i++) {
+        if (result[i] == 'd' && result[i+1] == 'o') doflag = true;
+        if (result[i] == 'i' && result[i + 1] == 'f'
+            || result[i] == 'w' && result[i + 1] == 'h' && result[i + 2] == 'i' && result[i + 3] == 'l' &&
+               result[i + 4] == 'e' && !doflag ||
+            result[i] == 'f' && result[i + 1] == 'o' && result[i + 2] == 'r')
+            kalflag = true;
+        if (kalflag && result[i] == '(') brBalance++;
+        if (kalflag && result[i] == ')' && brBalance == 1) {
+            brBalance = 0;
+            kalflag = false;
+            endflag = 1;
+            brindex = i;
+        }
+        if(doflag)
+        {
+            if(result[i] == '{') doBalance++;
+            if(result[i] == '}' && doBalance==1)
+            {
+                doflag = false;
+                doBalance--;
+            }
+        }
+        if (kalflag && result[i] == ')') brBalance--;
+
+        if (endflag == 1 && result[i] == '{') endflag = false;
+        else if (endflag == 1 && result[i] != ' ' && result[i] != ')') {
+            endflag = 2;
+            nesting225++;
+            result = replaceOneWord(result, ")", "){", brindex);
+        }
+
+        if (endflag == 2 && result[i] == ';') {
+            char nestingLine[10] = {';'};
+            for(int j = 1; j < (nesting225 < 10 ? nesting225 + 1 : 10); j++)  nestingLine[j] = '}';
+            endflag = false;
+            result = replaceOneWord(result, ";", nestingLine, i);
+            nesting225 = 0;
+        }
+    }
     for(int i = 0; i < strlen(result); i++) {
         if(result[i] == '"') kavy = !kavy; // checking if we can replace things
 
@@ -87,7 +134,7 @@ char* contextReplacer(char* code)
             }
 
             if(result[i] == '#') preprocFlag = true;
-            if(result[i] == '\r' && preprocFlag) preprocFlag = false;
+            if(result[i] == '\n' && preprocFlag) preprocFlag = false;
 
             if(result[i] == '=' && result[i+1] != '=' && result[i-1] != '=' && result[i-1] != '<' && result[i-1] != '>') {
                 result = replaceOneWord(result, "=", " = ", i);
@@ -198,6 +245,7 @@ char* formatCode(char *code) {
             initializer = false;
         }
     }
+    clean = replaceWord(clean, "\r\n", "\n", 0);
     return clean;
 }
 
