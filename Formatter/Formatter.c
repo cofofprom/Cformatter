@@ -37,8 +37,11 @@ char* forFormat(char* code)
             if(result[i] == ';' && result[i + 1] != ' ' && forFlag)
                 result = replaceOneWord(result, ";", "; ", i);
             if(forFlag && result[i] == '(') forBalance++;
+            if(forFlag && forBalance == 1 && result[i] == ')') {
+                forFlag = false;
+                forBalance--;
+            }
             if(forFlag && result[i] == ')') forBalance--;
-            if(forFlag && forBalance == 0) forFlag = false;
         }
     }
     return result;
@@ -75,11 +78,7 @@ char* contextReplacer(char* code)
         if(doflag)
         {
             if(result[i] == '{') doBalance++;
-            if(result[i] == '}' && doBalance==1)
-            {
-                doflag = false;
-                doBalance--;
-            }
+            if(result[i] == '}') doBalance--;
         }
         if (kalflag && result[i] == ')') brBalance--;
 
@@ -89,7 +88,6 @@ char* contextReplacer(char* code)
             nesting225++;
             result = replaceOneWord(result, ")", "){", brindex);
         }
-
         if (endflag == 2 && result[i] == ';') {
             char nestingLine[10] = {';'};
             for(int j = 1; j < (nesting225 < 10 ? nesting225 + 1 : 10); j++)  nestingLine[j] = '}';
@@ -97,6 +95,8 @@ char* contextReplacer(char* code)
             result = replaceOneWord(result, ";", nestingLine, i);
             nesting225 = 0;
         }
+
+        if(doflag && !doBalance && result[i] == ';') doflag = false;
     }
     for(int i = 0; i < strlen(result); i++) {
         if(result[i] == '"') kavy = !kavy; // checking if we can replace things

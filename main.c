@@ -11,16 +11,36 @@
 #include "CheckVariablesAndFunctions/RemovePreprocessors.h"
 
 int main(int argc, char* argv[]) {
-    FILE* out = fopen("out.txt", "w");
     PROGRAM_PARAMS* params = initProgramParams();
     int errorParamIndex = 0;
     parseCmdParams(argc, argv, params, &errorParamIndex);
-    char* inFilename = params->filenames->strings[0];
-    char* code = readCode(inFilename);
-    code = formatCode(code);
-    code = replaceWithCamelCase(code);
-    code = replaceWithPascalCase(code);
-    printf("Formatted code printed out to out.txt\n");
-    fprintf(out,"%s", code);
-    printMaxLoopNesting(code);
+    for(int i = 0; i < params->filenames->length; i++) {
+        char* filename = params->filenames->strings[i];
+        if(filename[strlen(filename) - 1] != 'h') {
+            char outfname[1024] = {'o', 'u', 't', '\\', 0};
+            int outpos = 4;
+            for(int j = 0; j < strlen(filename); j++)
+            {
+                if (filename[j] == '\\') {
+                    outpos = 4;
+                    continue;
+                }
+
+                outfname[outpos++] = filename[j];
+            }
+            outfname[outpos] = 0;
+            strcat(outfname, "_out.c");
+            FILE* out = fopen(outfname, "w");
+            printf("Analyzing %s...\n", filename);
+            char *code = readCode(filename);
+            code = formatCode(code);
+            code = replaceWithCamelCase(code);
+            code = replaceWithPascalCase(code);
+            printf("Formatted code printed out to %s\n", outfname);
+            fprintf(out, "%s", code);
+            printMaxLoopNesting(code);
+            printf("\n");
+            fclose(out);
+        }
+    }
 }
