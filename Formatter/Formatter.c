@@ -28,7 +28,7 @@ char* forFormat(char* code)
         if(!kavy)
         {
             char curr = result[i];
-            if(result[i] == 'f' && result[i+1] == 'o' && result[i+2] == 'r')
+            if(!(result[i] >= 'a' && result[i] <= 'z') && result[i+1] == 'f' && result[i+2] == 'o' && result[i+3] == 'r' && !(result[i+4] >= 'a' && result[i+4] <= 'z'))
             {
                 forFlag = true;
                 i+=4;
@@ -63,7 +63,7 @@ char* contextReplacer(char* code)
         if (result[i] == 'i' && result[i + 1] == 'f'
             || result[i] == 'w' && result[i + 1] == 'h' && result[i + 2] == 'i' && result[i + 3] == 'l' &&
                result[i + 4] == 'e' && !doflag ||
-            result[i] == 'f' && result[i + 1] == 'o' && result[i + 2] == 'r')
+               !(result[i] >= 'a' && result[i] <= 'z') && result[i + 1] == 'f' && result[i + 2] == 'o' && result[i + 3] == 'r' && !(result[i+4] >= 'a' && result[i+4] <= 'z'))
             kalflag = true;
         if (kalflag && result[i] == '(') brBalance++;
         if (kalflag && result[i] == ')' && brBalance == 1) {
