@@ -247,7 +247,10 @@ void printVariables(char *RawCode)         //Output function
         {
             if (!strcmp(ListOfVariables[i].Value, "-"))
             {
-                printf("%s\n", ListOfVariables[i].Name);
+                if (findTypeInList(ListOfVariables[i].Name) == -1)
+                {
+                    printf("  %s\n", ListOfVariables[i].Name);
+                }
             }
         }
     }

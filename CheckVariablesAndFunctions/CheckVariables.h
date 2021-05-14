@@ -7,7 +7,7 @@
 #include "../Formatter/Formatter.h"
 #include "RemovePreprocessors.h"
 #include "../StringTools/StringTools.h"
-#include "FindRecursion.h"
+#include "CheckFunctions.h"
 
 #define SIZE 100
 #define MAX_SIZE 250
@@ -16,13 +16,13 @@
 #define bool int
 #define true 1
 #define false 0
-#define NumberOfStdTypes 37
 #define SIZE_OF_CODE 1024*10
 
 typedef struct Variables
 {
     char Name[SIZE];
     char Value[SIZE];
+    bool isUsed;
 } Variables;
 
 int findVariableInList(char *NameOfVariable);

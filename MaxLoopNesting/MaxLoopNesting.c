@@ -259,5 +259,5 @@ void printMaxLoopNesting(char *InputString)
         findMaxLoopNesting(InputString, &idx, &cnt);
         if (cnt > ans) ans = cnt;
     }
-    printf("Maximum depth of nested loops is %d", ans);
+    printf("Maximum depth of nested loops is %d.\n", ans);
 }

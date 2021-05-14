@@ -45,7 +45,6 @@ char *changeMacro(char *Code)
                         }
                     }
                 }
-                ChangeFor[strlen(ChangeFor) - 1] = '\0';
                 Preproc[strlen(Preproc) - 1] = '\0';
                 NewCode = replaceOneWord(NewCode, Preproc, "", 1);
                 NewCode = replaceWord(NewCode, WhatToChange, ChangeFor, i);

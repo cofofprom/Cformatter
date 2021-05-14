@@ -7,7 +7,7 @@
 #include "CamelAndPascalCases/CamelCase.h"
 #include "CamelAndPascalCases/PascalCase.h"
 #include "CheckVariablesAndFunctions/CheckVariables.h"
-#include "CheckVariablesAndFunctions/FindRecursion.h"
+#include "CheckVariablesAndFunctions/CheckFunctions.h"
 #include "CheckVariablesAndFunctions/RemovePreprocessors.h"
 
 int main(int argc, char *argv[])
@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
             checkFunctionsForRecursion(code);
             printVariables(code);
             checkName(code);
+            printUnusedFunctions(code);
             printf("\n");
             fclose(out);
         }

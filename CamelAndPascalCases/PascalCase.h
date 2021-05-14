@@ -4,7 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "../StringTools/StringTools.h"
-#include "../CheckVariablesAndFunctions/FindRecursion.h"
+#include "../CheckVariablesAndFunctions/CheckFunctions.h"
 #include "CamelCase.h"
 #include "../CheckVariablesAndFunctions/CheckVariables.h"
 
