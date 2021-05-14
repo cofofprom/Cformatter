@@ -220,12 +220,6 @@ char* formatCode(char *code) {
     bool kavy = false;
     for(int i = 0; i < strlen(clean); i++) {
         if(clean[i] == '"') kavy = !kavy;
-        if(!kavy) {
-            if(clean[i] == '*' && clean[i+1] == '/') {
-                clean = replaceOneWord(clean, "*/", "*/\n", i);
-                i+=2;
-            }
-        }
     }
     bool preprocFlag = false;
     bool preprocBalance = 0;
@@ -274,6 +268,15 @@ char* formatCode(char *code) {
             } else if (clean[i] == '}') {
                 nesting--;
                 structFlag = false;
+            }
+            if(clean[i] == '*' && clean[i+1] == '/')
+            {
+                char nestingNewLine[10] = {'*', '/',
+                                           '\n', 0};
+                for (int j = 3; j - 3 < nesting - 1; j++) nestingNewLine[j] = '\t';
+                nesting--;
+                clean = replaceOneWord(clean, "*/", nestingNewLine, i);
+                i+=2;
             }
             //if (clean[i] == '}' && (clean[i + 1] >= 'a' && clean[i+1] <= 'z') || clean[i + 1] == ';') nesting--;
             if (clean[i] == ';' && clean[i + 1] != ' ') {
