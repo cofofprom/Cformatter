@@ -202,7 +202,6 @@ char* formatCode(char *code) {
     char* clean = deleteFormat(code);
     clean = contextReplacer(clean);
     //clean = replaceWord(clean, "\r", "\n", 0);
-
     clean = deleteFormat(clean);
     clean = forFormat(clean);
     bool preprocFlag = false;
@@ -252,7 +251,7 @@ char* formatCode(char *code) {
             initializer = false;
         }
     }
-    initializer = false;
+    //initializer = false;
     clean = replaceWord(clean, "\r\n", "\n", 0);
     /*for(int i = 0; i < strlen(clean); i++) {
         if(clean[i] == '"');

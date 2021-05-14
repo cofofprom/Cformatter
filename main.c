@@ -41,6 +41,7 @@ int main(int argc, char *argv[])
             code = replaceWithPascalCase(code);
             printf("Formatted code printed out to %s\n", outfname);
             fprintf(out, "%s", code);
+            printf("%s\n", code);
             printMaxLoopNesting(code);
             checkFunctionsForRecursion(code);
             printVariables(code);
