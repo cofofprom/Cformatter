@@ -220,7 +220,11 @@ char* formatCode(char *code) {
             i += 5;
             initializer = true;
         }
-        if(clean[i] == '}' && initializer) continue;
+        if(clean[i] == '}' && initializer) {
+            clean = replaceOneWord(clean, "}", " }", i);
+            i+=1;
+            continue;
+        }
         // nesting format
         if(clean[i] == '{')
         {
