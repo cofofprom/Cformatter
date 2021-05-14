@@ -274,9 +274,9 @@ char* formatCode(char *code) {
                 char nestingNewLine[10] = {'*', '/',
                                            '\n', 0};
                 for (int j = 3; j - 3 < nesting - 1; j++) nestingNewLine[j] = '\t';
-                nesting--;
                 clean = replaceOneWord(clean, "*/", nestingNewLine, i);
-                i+=2;
+                printf("%s\n", clean);
+                i+=3;
             }
             //if (clean[i] == '}' && (clean[i + 1] >= 'a' && clean[i+1] <= 'z') || clean[i + 1] == ';') nesting--;
             if (clean[i] == ';' && clean[i + 1] != ' ') {
