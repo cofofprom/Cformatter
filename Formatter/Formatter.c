@@ -208,8 +208,13 @@ char* formatCode(char *code) {
     bool preprocBalance = 0;
     bool initializer = false;
     int nesting = 0;
+    bool structFlag = false;
     for(int i = 0; i < strlen(clean); i++)
     {
+        char currdebug = clean[i];
+        if(clean[i+1] == 's' && clean[i+2] == 't' && clean[i+3] == 'r' && clean[i+4] == 'u' && clean[i+5] == 'c' && clean[i+6] == 't' && clean[i+7] == ' ')
+            structFlag = true;
+
         if(clean[i] == ']' && clean[i + 1] == ' ' && clean[i + 2] == '=' && clean[i + 3] == ' ' && clean[i + 4] == '{') {
             clean = replaceOneWord(clean, "{", "{ ", i);
             i += 5;
@@ -224,7 +229,7 @@ char* formatCode(char *code) {
             for(int j = 2; j - 2 < nesting; j++) nestingNewLine[j] = '\t';
             clean = replaceOneWord(clean, "{", nestingNewLine, i);
         }
-        if(clean[i] == '}' && !(clean[i + 1] >= 'a' && clean[i+1] <= 'z') && clean[i + 1] != ';') {
+        if(clean[i] == '}' && !structFlag) {
             char nestingNewLine[10] = {'}', '\n', 0};
             if(clean[i+1] != '}') {
                 for (int j = 2; j - 2 < nesting - 1; j++) nestingNewLine[j] = '\t';
@@ -238,7 +243,10 @@ char* formatCode(char *code) {
                 clean = replaceOneWord(clean, "}", nestingNewLine, i);
             }
         }
-        else if(clean[i] == '}') nesting--;
+        else if(clean[i] == '}') {
+            nesting--;
+            structFlag = false;
+        }
         //if (clean[i] == '}' && (clean[i + 1] >= 'a' && clean[i+1] <= 'z') || clean[i + 1] == ';') nesting--;
         if (clean[i] == ';' && clean[i+1] != ' ') {
             char nestingNewLine[10] = {';', '\n', 0};

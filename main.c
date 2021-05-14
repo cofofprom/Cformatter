@@ -39,16 +39,16 @@ int main(int argc, char *argv[])
             code = formatCode(code);
             code = replaceWithCamelCase(code);
             code = replaceWithPascalCase(code);
+            fprintf(out, "%s\n", code);
+            fclose(out);
             printf("Formatted code printed out to %s\n", outfname);
-            fprintf(out, "%s", code);
-            printf("%s\n", code);
+            //printf("%s\n", code);
             printMaxLoopNesting(code);
             checkFunctionsForRecursion(code);
             printVariables(code);
             checkName(code);
             printUnusedFunctions(code);
             printf("\n");
-            fclose(out);
         }
     }
     return 0;
