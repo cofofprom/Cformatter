@@ -105,8 +105,13 @@ char* contextReplacer(char* code)
     }
     for(int i = 0; i < strlen(result); i++) {
         if(result[i] == '"') kavy = !kavy; // checking if we can replace things
-        if(result[i] == '/' && result[i+1] == '*') commentFlag = true;
-        if(result[i] == '*' && result[i+1] == '/') commentFlag = false;
+
+        if(!kavy) {
+            if(result[i] == '/' && result[i+1] == '*') commentFlag = true;
+            if(result[i] == '*' && result[i+1] == '/') {
+                commentFlag = false;
+            }
+        }
 
         if(!kavy && !commentFlag)
         {
@@ -208,9 +213,20 @@ char* contextReplacer(char* code)
 char* formatCode(char *code) {
     char* clean = deleteFormat(code);
     clean = contextReplacer(clean);
+    //printf("%s\n", clean);
     //clean = replaceWord(clean, "\r", "\n", 0);
     clean = deleteFormat(clean);
     clean = forFormat(clean);
+    bool kavy = false;
+    for(int i = 0; i < strlen(clean); i++) {
+        if(clean[i] == '"') kavy = !kavy;
+        if(!kavy) {
+            if(clean[i] == '*' && clean[i+1] == '/') {
+                clean = replaceOneWord(clean, "*/", "*/\n", i);
+                i+=2;
+            }
+        }
+    }
     bool preprocFlag = false;
     bool preprocBalance = 0;
     bool initializer = false;
@@ -219,7 +235,6 @@ char* formatCode(char *code) {
     bool commentFlag = false;
     for(int i = 0; i < strlen(clean); i++)
     {
-        char currdebug = clean[i];
         if(clean[i] == '/' && clean[i+1] == '*') commentFlag = true;
         if(clean[i] == '*' && clean[i+1] == '/') commentFlag = false;
         if(!commentFlag) {

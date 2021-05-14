@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
             printf("Analyzing %s...\n", filename);
             char *code = readCode(filename);
             code = formatCode(code);
+            //printf("%s\n", code);
             code = replaceWithCamelCase(code);
             code = replaceWithPascalCase(code);
             fprintf(out, "%s\n", code);
