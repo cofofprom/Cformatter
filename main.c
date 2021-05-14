@@ -7,7 +7,6 @@
 #include "CamelAndPascalCases/CamelCase.h"
 #include "CamelAndPascalCases/PascalCase.h"
 #include "CheckVariablesAndFunctions/CheckVariables.h"
-#include "CheckVariablesAndFunctions/CheckFunctions.h"
 #include "CheckVariablesAndFunctions/RemovePreprocessors.h"
 
 int main(int argc, char *argv[])

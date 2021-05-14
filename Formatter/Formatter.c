@@ -152,8 +152,12 @@ char* contextReplacer(char* code)
                 result = replaceOneWord(result, ">=", " >= ", i);
                 i+=2;
             }
-            if(result[i] == '>' && result[i+1] != '=' && !preprocFlag) {
+            if(result[i] == '>' && result[i+1] != '=' && !preprocFlag  && result[i - 1] != '-') {
                 result = replaceOneWord(result, ">", " > ", i);
+                i+=2;
+            }
+            if(result[i] == '-' && result[i + 1] == '>') {
+                result = replaceOneWord(result, "->", " -> ", i);
                 i+=2;
             }
             if(result[i] == '+' && result[i+1] == '=') {
@@ -168,7 +172,7 @@ char* contextReplacer(char* code)
                 result = replaceOneWord(result, "-=", " -= ", i);
                 i+=2;
             }
-            if(result[i] == '-' && result[i+1] != '=' && result[i + 1] != '-' && result[i - 1] != '-') {
+            if(result[i] == '-' && result[i+1] != '=' && result[i + 1] != '-' && result[i - 1] != '-' && result[i + 1] != '>') {
                 result = replaceOneWord(result, "-", " - ", i);
                 i+=2;
             }
@@ -190,6 +194,7 @@ char* contextReplacer(char* code)
             }
         }
     }
+    kalflag = false;
     return result;
 }
 
@@ -220,7 +225,7 @@ char* formatCode(char *code) {
             for(int j = 2; j - 2 < nesting; j++) nestingNewLine[j] = '\t';
             clean = replaceOneWord(clean, "{", nestingNewLine, i);
         }
-        if(clean[i] == '}') {
+        if(clean[i] == '}' && !(clean[i + 1] >= 'a' && clean[i+1] <= 'z') && clean[i + 1] != ';') {
             char nestingNewLine[10] = {'}', '\n', 0};
             if(clean[i+1] != '}') {
                 for (int j = 2; j - 2 < nesting - 1; j++) nestingNewLine[j] = '\t';
@@ -234,6 +239,8 @@ char* formatCode(char *code) {
                 clean = replaceOneWord(clean, "}", nestingNewLine, i);
             }
         }
+        else if(clean[i] == '}') nesting--;
+        //if (clean[i] == '}' && (clean[i + 1] >= 'a' && clean[i+1] <= 'z') || clean[i + 1] == ';') nesting--;
         if (clean[i] == ';' && clean[i+1] != ' ') {
             char nestingNewLine[10] = {';', '\n', 0};
             if(clean[i+1] != '}')
@@ -245,7 +252,11 @@ char* formatCode(char *code) {
             initializer = false;
         }
     }
+    initializer = false;
     clean = replaceWord(clean, "\r\n", "\n", 0);
+    /*for(int i = 0; i < strlen(clean); i++) {
+        if(clean[i] == '"');
+    }*/
     return clean;
 }
 
