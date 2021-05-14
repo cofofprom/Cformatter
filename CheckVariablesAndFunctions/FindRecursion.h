@@ -26,6 +26,8 @@ int findTypeInList(char *NameOfType);
 
 int isNameOfSavedType(char *Code, int idx);
 
+bool isNameOfUserType(char *Code, int idx);
+
 void addAllTypes(char *Code);
 
 bool isFunction(char *Code, int idx);

@@ -39,4 +39,6 @@ void DEBUG_VARS(char *RawCode);
 
 void checkName(char *RawCode);
 
+int isTypedef(char *Code, int idx);
+
 #endif //CFORMATTER_CHECKVARIABLES_H

@@ -6,6 +6,7 @@
 #include "../StringTools/StringTools.h"
 #include "../CheckVariablesAndFunctions/FindRecursion.h"
 #include "CamelCase.h"
+#include "../CheckVariablesAndFunctions/CheckVariables.h"
 
 char* replaceWithPascalCase(char* inputString);
 

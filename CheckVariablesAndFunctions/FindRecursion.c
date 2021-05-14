@@ -49,16 +49,37 @@ int isNameOfSavedType(char *Code,
     return false;
 }
 
+bool isNameOfUserType(char *Code, int idx)
+{
+    char Name[STRING_SIZE] = {0};
+    int ptr = 0;
+    for (int i = idx; i < strlen(Code) && Code[i] != '\n'; i++)
+    {
+        if ((Code[i] >= 'a' && Code[i] <= 'z') || (Code[i] >= 'A' && Code[i] <= 'Z') || Code[i] == '_')
+        {
+            Name[ptr] = Code[i];
+            ptr++;
+        }
+        else break;
+    }
+    for (int i = 0; i < NumberOfSavedTypes; i++)
+    {
+        if (strlen(Name) == ListOfUserTypes[i].NameSize && !strcmp(Name, ListOfUserTypes[i].Name)) return true;
+        else continue;
+    }
+    return false;
+}
+
 void addAllTypes(char *Code)
 {
     char StructString[] = "struct", str[MAX_SIZE] = {0};
     bool isType = false;
     for (int i = 0; i < strlen(Code) - strlen(StructString); i++)
     {
-        if (Code[i] == 's' && Code[i - 1] == '\t')
+        if (Code[i] == 's' && (Code[i - 1] == '\n' || Code[i - 1] == '\r' || Code[i - 1] == '\t' || Code[i - 1] == ' '))
         {
             bool flag = true;
-            for (int j = 0; j < strlen(StructString) && i + j < strlen(Code); j++)
+            for (int j = 0; j < strlen(StructString); j++)
             {
                 if (StructString[j] != Code[i + j])
                 {
@@ -68,9 +89,10 @@ void addAllTypes(char *Code)
             }
             if (flag)
             {
+                int idx = i + strlen(StructString) + 1;
                 int CountBrackets = 0, id = i, StructPtr = 0, TypedefPtr = 0;
                 char NameOfStruct[SIZE] = {0}, TypedefName[SIZE] = {0};
-                for (int j = i; Code[j] != '\n' && Code[j] != '{'; j++)
+                for (int j = idx; Code[j] != '\n' && Code[j] != '{'; j++)
                 {
                     if (Code[j] != ' ')
                     {
@@ -78,28 +100,43 @@ void addAllTypes(char *Code)
                         StructPtr++;
                     }
                 }
-                for (int j = i; j < strlen(Code); j++)
+                bool flag = false;
+                for (int j = idx; j < strlen(Code); j++)
                 {
-                    if (Code[j] == '{') CountBrackets++;
+                    if (Code[j] == '{') CountBrackets++, flag = true;
                     if (Code[j] == '}') CountBrackets--;
-                    if (CountBrackets == 0)
+                    if (CountBrackets == 0 && flag)
                     {
                         id = j;
                         break;
                     }
                 }
+                id++;
                 for (int j = id; j < strlen(Code) && Code[j] != ';'; j++)
                 {
-                    if (Code[j] != ' ')
+                    if (Code[j] != ' ' && Code[j] != '\n')
                     {
                         TypedefName[TypedefPtr] = Code[j];
                         TypedefPtr++;
                     }
                 }
-                if (TypedefPtr != 0) strcpy(NameOfStruct, TypedefName);
-                strcpy(ListOfUserTypes[NumberOfSavedTypes].Name, NameOfStruct);
-                ListOfUserTypes[NumberOfSavedTypes].NameSize = (int) strlen(ListOfUserTypes[NumberOfSavedTypes].Name);
-                NumberOfSavedTypes++;
+                bool IsAlreadyAdded = false;
+                for (int i = 0; i < NumberOfSavedTypes; i++)
+                {
+                    if ((strlen(NameOfStruct) == ListOfUserTypes[i].NameSize &&
+                         !strcmp(NameOfStruct, ListOfUserTypes[i].Name) && TypedefPtr == 0) ||
+                        (strlen(TypedefName) == ListOfUserTypes[i].NameSize &&
+                         !strcmp(TypedefName, ListOfUserTypes[i].Name) && TypedefPtr != 0))
+                        IsAlreadyAdded = true;
+                }
+                if (!IsAlreadyAdded)
+                {
+                    if (TypedefPtr != 0) strcpy(NameOfStruct, TypedefName);
+                    strcpy(ListOfUserTypes[NumberOfSavedTypes].Name, NameOfStruct);
+                    ListOfUserTypes[NumberOfSavedTypes].NameSize = (int) strlen(
+                            ListOfUserTypes[NumberOfSavedTypes].Name);
+                    NumberOfSavedTypes++;
+                }
             }
             else continue;
         }
@@ -327,7 +364,7 @@ void DEBUG_FUNC(char *RawCode)
     Code = changeMacro(RawCode);
 //    Code = changeTypedef(Code);
     addAllFunctions(Code);
-    printf("%s\n", Code);
+//    printf("%s\n", Code);
     printf("All user types:\n");
     for (int i = 0; i < NumberOfSavedTypes; i++)
     {

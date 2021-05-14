@@ -345,3 +345,41 @@ void checkName(char *RawCode)
         }
     }
 }
+
+int isTypedef(char *Code, int idx)              //Returns index of the name of a type if it is typedef
+{
+    char *TypedefString = "typedef";
+    for (int i = idx; i < strlen(Code); i++)
+    {
+        if (Code[i] == 't')
+        {
+            bool flag = true;
+            for (int j = i; j < strlen(TypedefString); j++)
+            {
+                if (TypedefString[j] != Code[i + j])
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                for (int j = i; j < strlen(Code); j++)
+                {
+                    if (Code[j] == ';')
+                    {
+                        for (int k = j; k >= i; k--)
+                        {
+                            if (Code[k] == ' ')
+                            {
+                                return k + 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else return 0;
+    }
+    return 0;
+}
