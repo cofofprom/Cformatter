@@ -6,9 +6,9 @@
 #define true 1
 #define false 0
 
-char *changeCommet(char *code)
+char *changeComment(char *code)
 {
-    char* temp = (char*)calloc(1024*10, 1);
+    char* temp = (char*)calloc(1024*100, 1);
     strcpy(temp, code);
     bool flag = false;
     for (int i=0; i<strlen(temp)-1; i++)
@@ -43,7 +43,7 @@ char *changeCommet(char *code)
             }
             else
             {
-                strcpy(temp, replaceOneWord(temp, "*/", "", i-1));
+                strcpy(temp, replaceOneWord(temp, "*/", " ", i-1));
             }
             flag = false;
         }

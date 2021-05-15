@@ -200,10 +200,10 @@ char* contextReplacer(char* code)
                 result = replaceOneWord(result, "/=", " /= ", i);
                 i+=2;
             }
-            if(result[i] == '/' && result[i+1] != '=' && (result[i+1] != '*' && result[i-1] != '*') && result[i+1] != '/' && result[i-1] != '/') {
-                result = replaceOneWord(result, "/", " / ", i);
-                i+=2;
-            }
+//            if(result[i] == '/' && result[i+1] != '=') {
+//                result = replaceOneWord(result, "/", " / ", i);
+//                i+=2;
+//            }
         }
     }
     kalflag = false;

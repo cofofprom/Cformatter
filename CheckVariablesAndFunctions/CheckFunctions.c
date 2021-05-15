@@ -395,7 +395,7 @@ void checkFunctionsForRecursion(char *RawCode)
     }
     if (!flag)
     {
-        printf("No recursive calls were detected in the program code\n");
+        printf("No recursive calls were detected in the program code\n\n");
     }
     memset(ListOfFunctions, '\0', sizeof(ListOfFunctions));
     FuncPtr = 0;
@@ -426,7 +426,7 @@ void printUnusedFunctions(char *RawCode)
             }
         }
     }
-    if (!flag) printf("Each function in code has been used at least once.\n");
+    if (!flag) printf("Each function in code has been used at least once.\n\n");
     else printf("\n");
     memset(ListOfFunctions, '\0', sizeof(ListOfFunctions));
     FuncPtr = 0;

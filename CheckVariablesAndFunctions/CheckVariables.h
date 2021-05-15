@@ -35,6 +35,8 @@ void findVariables(char *Code);
 
 void printVariables(char *RawCode);
 
+void printUnusedVariables(char *RawCode);
+
 void DEBUG_VARS(char *RawCode);
 
 void checkName(char *RawCode);

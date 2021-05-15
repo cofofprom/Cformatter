@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdlib.h>
 
 
@@ -8,45 +8,46 @@
 #define ROW 100
 
 #define COL 100
-int main2()
+int main()
 {
 
-    /*dfvdfvndfuj
-     * fdvrs
-     */
     int n,count=0;
 
-    int mat[ROW][COL] = { 0 };
-    int a[ROW] = { 0 };
 
-
-    scanf("%d", &n);
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-        {
-            scanf("%d", &mat[i][j]);
-        }
+scanf("%d", &n);
+for (int i = 0; i < n; ++i)
+{
+for (int j = 0; j < n; ++j)
+{
+    printf("*\n");
+}
 
 }
-    for (int j = 0; j < n; ++j)
+
+for (int j = 0; j < n; ++j)
+{
+for (int i = 0; i < n; ++i)
+{if (1){
+    while (1)
     {
-        for (int i = 0; i < n; ++i)
+        while (2)
         {
-            if (mat[i][count] == 0) {
-                  a[count] = i;
-                count++;
+            while (3)
+            {
+                break;
             }
         }
     }
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-        {
-            printf("%d ", mat[a[i]][j]);
-        }
-        printf("\n");
     }
+}
+}
+for (int i=0; i<n;++i)
+{
+for (int j=0; j<n;++j)
+{
+    printf("OK\n");
+}
+printf("\n");
+}
     return 0;
 }
-

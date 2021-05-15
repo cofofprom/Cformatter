@@ -1,6 +1,6 @@
 #ifndef CFORMATTER_CHANGECOMMENTS_H
 #define CFORMATTER_CHANGECOMMENTS_H
 
-char *changeCommet(char *code);
+char *changeComment(char *code);
 
 #endif //CFORMATTER_CHANGECOMMENTS_H

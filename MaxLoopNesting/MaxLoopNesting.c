@@ -39,7 +39,7 @@ char *deleteDoWhile(char *InputString, char *OutputString)
                 int ptr = 0;
                 for (int k = idx; k < strlen(InputString); k++)
                 {
-                    if (InputString[k] != '\n')
+                    if (InputString[k] != ';')
                     {
                         temp[ptr] = InputString[k];
                         ptr++;
@@ -47,7 +47,7 @@ char *deleteDoWhile(char *InputString, char *OutputString)
                     else break;
                 }
 
-                OutputString = replaceOneWord(InputString, temp, " ", i);
+                OutputString = replaceOneWord(InputString, temp, " ", i - 1);
 
                 OutputString = replaceOneWord(InputString, "do", temp, i - 1);
 
@@ -226,7 +226,7 @@ void findMaxLoopNesting(char *InputString, int *Shift, int *Ans)
         }
     }
     (*Shift)++;
-    if (findLoop(InputString, *Shift) <= idx && findLoop(InputString, *Shift) != 0 )
+    if (findLoop(InputString, *Shift) <= idx && findLoop(InputString, *Shift) != 0)
     {
         (*Ans)++;
     }
@@ -238,9 +238,9 @@ void findMaxLoopNesting(char *InputString, int *Shift, int *Ans)
         findMaxLoopNesting(InputString, &(*Shift), &cnt);
         FindMax[ptr] = cnt;
     }
-    for (int i=0; i<SIZE; i++)
+    for (int i = 0; i < SIZE; i++)
     {
-        if (FindMax[i]>*Ans)
+        if (FindMax[i] > *Ans)
         {
             *Ans = FindMax[i];
         }
@@ -259,5 +259,5 @@ void printMaxLoopNesting(char *InputString)
         findMaxLoopNesting(InputString, &idx, &cnt);
         if (cnt > ans) ans = cnt;
     }
-    printf("Maximum depth of nested loops is %d.\n", ans);
+    printf("Maximum depth of nested loops is %d.\n\n", ans);
 }

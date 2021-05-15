@@ -217,6 +217,25 @@ void printVariables(char *RawCode)         //Output function
     Code = changeTypedef(Code);
     for (int i = 0; i < strlen(Code) - 3; i++)
     {
+        if (Code[i] == 's' && Code[i + 1] == 't' && Code[i + 2] == 'r' && Code[i + 3] == 'u' && Code[i + 4] == 'c' &&
+            Code[i + 5] == 't' && i < strlen(Code) - 5)
+        {
+            int Brackets = 0, flag = false;
+            for (int j = i; j < strlen(Code); j++)
+            {
+                if (Code[j] == '{' && !flag)
+                {
+                    flag = true;
+                    Brackets++;
+                }
+                else if (Code[j] == '}') Brackets--;
+                if (Brackets == 0)
+                {
+                    i = j;
+                    break;
+                }
+            }
+        }
         if (Code[i] != ' ' && Code[i] != '\n' && Code[i] != ';' && Code[i] != '\t')
         {
             if (isNameOfSavedType(Code, i))
@@ -253,20 +272,69 @@ void printVariables(char *RawCode)         //Output function
                 }
             }
         }
+        printf("\n");
     }
     else
     {
-        printf("Each variable is assigned a value.\n");
+        printf("Each variable is assigned a value.\n\n");
     }
+}
+
+void printUnusedVariables(char *RawCode)
+{
+    char *Code = (char *) calloc(SIZE_OF_CODE, 1);
+    Code = changeMacro(RawCode);
+    for (int i=0; i<NumberOfVariables; i++)
+    {
+        if (countSubstring(Code, ListOfVariables[i].Name)>=2)
+        {
+            ListOfVariables[i].isUsed = 1;
+        }
+        else ListOfVariables[i].isUsed = 0;
+    }
+    bool flag = false;
+    for (int i=0; i<NumberOfVariables; i++)
+    {
+        if (ListOfVariables[i].isUsed == 0 && !flag)
+        {
+            flag = true;
+            printf("These variables were never used: %s", ListOfVariables[i].Name);
+        }
+        else if (ListOfVariables[i].isUsed == 0 && flag)
+        {
+            printf(", %s", ListOfVariables[i].Name);
+        }
+    }
+    if (!flag) printf("All variables were used at least once.\n\n");
+    else printf(".\n\n");
 }
 
 void DEBUG_VARS(char *RawCode)
 {
     char *Code = (char *) calloc(SIZE_OF_CODE, 1);
     Code = changeMacro(RawCode);
-    Code = changeTypedef(Code);
+//    Code = changeTypedef(Code);
     for (int i = 0; i < strlen(Code) - 3; i++)
     {
+        if (Code[i] == 's' && Code[i + 1] == 't' && Code[i + 2] == 'r' && Code[i + 3] == 'u' && Code[i + 4] == 'c' &&
+            Code[i + 5] == 't' && i < strlen(Code) - 5)
+        {
+            int Brackets = 0, flag = false;
+            for (int j = i; j < strlen(Code); j++)
+            {
+                if (Code[j] == '{' && !flag)
+                {
+                    flag = true;
+                    Brackets++;
+                }
+                else if (Code[j] == '}') Brackets--;
+                if (Brackets == 0)
+                {
+                    i = j;
+                    break;
+                }
+            }
+        }
         if (Code[i] != ' ' && Code[i] != '\n' && Code[i] != ';' && Code[i] != '\t')
         {
             if (isNameOfSavedType(Code, i))
@@ -308,6 +376,7 @@ void checkName(char *RawCode)
             }
         }
     }
+    bool flag = false;
     for (int i = 0; i < NumberOfVariables; i++)
     {
         char temp[MAX_SIZE] = {0};
@@ -323,12 +392,14 @@ void checkName(char *RawCode)
         if (strlen(NameOfVar) == 1 &&
             !((NameOfVar[0] >= 'a' && NameOfVar[0] <= 'z') || (NameOfVar[0] >= 'A' && NameOfVar[0] <= 'Z')))
         {
+            flag = true;
             printf("Wrong name of the variable (%s).\nThe name with only one symbol must be a Latin letter.\n",
                    NameOfVar);
             continue;
         }
         if (NameOfVar[0] >= '0' && NameOfVar[0] <= '9')
         {
+            flag = true;
             printf("Wrong name of the variable (%s).\nThe name of the variable must begin with a Latin letter of with a '_'\n",
                    NameOfVar);
             continue;
@@ -341,11 +412,16 @@ void checkName(char *RawCode)
                 if (j == 0 && NameOfVar[0] == '*') continue;
                 else
                 {
+                    flag = true;
                     printf("Wrong name of the variable (%s).\nOnly numbers, Latin letters, and the symbol '_' are allowed.\n");
                     break;
                 }
             }
         }
+    }
+    if (!flag)
+    {
+        printf("Names of all variables are correct.\n\n");
     }
 }
 
@@ -367,13 +443,16 @@ int isTypedef(char *Code, int idx)              //Returns index of the name of a
             }
             if (flag)
             {
+                int Brackets = 0;
                 for (int j = i; j < strlen(Code); j++)
                 {
-                    if (Code[j] == ';')
+                    if (Code[j] == '{') Brackets++;
+                    else if (Code[j] == '}') Brackets--;
+                    if (Code[j] == ';' && Brackets == 0)
                     {
                         for (int k = j; k >= i; k--)
                         {
-                            if (Code[k] == ' ')
+                            if (Code[k] == ' ' || Code[k] == '}')
                             {
                                 return k + 1;
                             }
